@@ -1,6 +1,6 @@
-package com.natiqhaciyef.techtive.common
+package com.natiqhaciyef.clotmobile.common
 
-import com.natiqhaciyef.techtive.data.models.course.DailyCourseModel
+
 
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
     companion object {

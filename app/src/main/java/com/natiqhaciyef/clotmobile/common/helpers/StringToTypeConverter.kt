@@ -1,4 +1,4 @@
-package com.natiqhaciyef.clotmobile.common.util.functions
+package com.natiqhaciyef.clotmobile.common.helpers
 
 
 fun main() {

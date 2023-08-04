@@ -5,33 +5,24 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ClothesModel(
+data class CoffeeModel(
     @SerializedName("id")
     var id: Int,
     @SerializedName("title")
     var title: String,
     @SerializedName("details")
     var details: String,
-    @SerializedName("brand")
-    var brand: String,
+    @SerializedName("image")
+    var image: String,
     @SerializedName("price")
     var price: Double,
     @SerializedName("price_currency")
     var priceCurrency: String,
     @SerializedName("size")
     var size: String,
-    @SerializedName("color")
-    var color: String,
-    @SerializedName("image")
-    var image: String,
-    @SerializedName("type")
-    var type: String,
-    @SerializedName("cargo_price")
-    var cargoPrice: Double,
-    @SerializedName("season")
-    var season: String,
-    @SerializedName("country")
-    var country: String,
-    @SerializedName("is_active")
-    var isActive: Int,
-):Parcelable
+    @SerializedName("rating")
+    var rating: Double,
+    @SerializedName("category")
+    var category: String
+): Parcelable
+

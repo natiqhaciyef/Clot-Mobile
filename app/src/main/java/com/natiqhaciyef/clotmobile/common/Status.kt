@@ -1,4 +1,4 @@
-package com.natiqhaciyef.techtive.common
+package com.natiqhaciyef.clotmobile.common
 
 enum class Status {
     SUCCESS,

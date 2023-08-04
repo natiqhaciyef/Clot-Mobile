@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.natiqhaciyef.clotmobile.R
 import com.natiqhaciyef.clotmobile.common.util.classes.NavItemModel
-import com.natiqhaciyef.clotmobile.ui.theme.AppDarkTeal
+import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppLightPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppYellow
