@@ -9,7 +9,7 @@ import com.natiqhaciyef.clotmobile.domain.repositories.CoffeeRepository
 class CoffeeRepositoryImpl(private val ds: CoffeeDataSource) : CoffeeRepository  {
     override suspend fun getAllCoffee(): CoffeeResult = ds.getAllCoffee()
 
-    override suspend fun getCoffeeByTitle(title: String): CoffeeModel? = ds.getCoffeeByTitle(title)
+    override suspend fun getCoffeeById(id: Int): CoffeeModel? = ds.getCoffeeById(id)
 
     override suspend fun insertCoffee(coffee: CoffeeModel): CRUDResponse = ds.insertCoffee(coffee)
 

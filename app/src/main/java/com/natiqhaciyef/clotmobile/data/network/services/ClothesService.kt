@@ -14,7 +14,7 @@ interface ClothesService {
     suspend fun getAllClothes(): ClothesResult
 
     @GET("clothes/search_clothes.php")
-    suspend fun getClothesByTitle(title: String): ClothesModel?
+    suspend fun getClothesById(id: Int): ClothesModel?
 
     @POST("clothes/insert_clothes.php")
     @FormUrlEncoded

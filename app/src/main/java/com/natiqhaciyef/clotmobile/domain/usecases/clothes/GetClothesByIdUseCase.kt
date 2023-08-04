@@ -6,13 +6,13 @@ import com.natiqhaciyef.techtive.domain.usecases.config.BaseUseCase
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetClothesByTitleUseCase @Inject constructor(
+class GetClothesByIdUseCase @Inject constructor(
     private val clothesRepo: ClothesRepository
 ) {
 
-    suspend operator fun invoke(title: String) = flow{
+    suspend operator fun invoke(id: Int) = flow{
         emit(Resource.loading(null))
-        val clothes = clothesRepo.getClothesByTitle(title)
+        val clothes = clothesRepo.getClothesById(id)
         if (clothes != null){
             emit(Resource.success(clothes))
         }else{

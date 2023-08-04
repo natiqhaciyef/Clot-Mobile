@@ -9,7 +9,7 @@ import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
 class ClothesRepositoryImpl(private val ds: ClothesDataSource): ClothesRepository {
     override suspend fun getAllClothes(): ClothesResult = ds.getAllClothes()
 
-    override suspend fun getClothesByTitle(title: String): ClothesModel? = ds.getClothesByTitle(title)
+    override suspend fun getClothesById(id: Int): ClothesModel? = ds.getClothesById(id)
 
     override suspend fun insertClothes(clothesModel: ClothesModel): CRUDResponse = ds.insertClothes(clothesModel)
 

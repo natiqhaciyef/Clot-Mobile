@@ -14,8 +14,8 @@ class CoffeeDataSource(
         service.getAllCoffee()
     }
 
-    suspend fun getCoffeeByTitle(title: String): CoffeeModel? = withContext(Dispatchers.IO) {
-        service.getCoffeeByTitle(title)
+    suspend fun getCoffeeById(id: Int): CoffeeModel? = withContext(Dispatchers.IO) {
+        service.getCoffeeById(id)
     }
 
     suspend fun insertCoffee(

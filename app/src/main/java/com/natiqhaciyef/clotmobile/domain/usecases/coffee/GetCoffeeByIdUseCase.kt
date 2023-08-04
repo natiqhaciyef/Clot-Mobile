@@ -6,14 +6,14 @@ import com.natiqhaciyef.techtive.domain.usecases.config.BaseUseCase
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetCoffeeByTitleUseCase @Inject constructor(
+class GetCoffeeByIdUseCase @Inject constructor(
     private val coffeeRepo: CoffeeRepository
 ) {
 
-    suspend operator fun invoke(title: String) = flow{
+    suspend operator fun invoke(id: Int) = flow{
         emit(Resource.loading(null))
 
-        val coffee = coffeeRepo.getCoffeeByTitle(title)
+        val coffee = coffeeRepo.getCoffeeById(id)
         if (coffee != null) {
             emit(Resource.success(coffee))
         }else {
