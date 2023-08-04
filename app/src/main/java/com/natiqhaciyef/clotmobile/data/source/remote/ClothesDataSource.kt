@@ -14,7 +14,7 @@ class ClothesDataSource(
         service.getAllClothes()
     }
 
-    suspend fun getClothesByTitle(title: String): ClothesModel = withContext(Dispatchers.IO){
+    suspend fun getClothesByTitle(title: String): ClothesModel? = withContext(Dispatchers.IO){
         service.getClothesByTitle(title)
     }
 

@@ -6,5 +6,5 @@ import com.natiqhaciyef.clotmobile.data.models.CoffeeModel
 
 data class CoffeeResult(
     @SerializedName("coffee_table")
-    val coffeeList: List<CoffeeModel>
+    val coffeeList: List<CoffeeModel>?
 )

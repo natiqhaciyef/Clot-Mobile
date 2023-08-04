@@ -5,6 +5,10 @@ import com.natiqhaciyef.clotmobile.data.network.NetworkURL
 import com.natiqhaciyef.clotmobile.data.network.services.CoffeeService
 import com.natiqhaciyef.clotmobile.data.source.remote.ClothesDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeDataSource
+import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.CoffeeRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.ClothesRepositoryImpl
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.CoffeeRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,5 +48,13 @@ object RemoteModule {
     @Provides
     @Singleton
     fun provideCoffeeDataSource(service: CoffeeService) = CoffeeDataSource(service)
+
+    @Provides
+    @Singleton
+    fun provideClothesRepository(ds: ClothesDataSource) = ClothesRepositoryImpl(ds) as ClothesRepository
+
+    @Provides
+    @Singleton
+    fun provideCoffeeRepository(ds: CoffeeDataSource) = CoffeeRepositoryImpl(ds) as CoffeeRepository
 
 }

@@ -14,7 +14,7 @@ interface CoffeeService {
     suspend fun getAllCoffee(): CoffeeResult
 
     @GET("coffee/search_coffee.php")
-    suspend fun getCoffeeByTitle(title: String): CoffeeModel
+    suspend fun getCoffeeByTitle(title: String): CoffeeModel?
 
     @POST("coffee/insert_coffee.php")
     @FormUrlEncoded

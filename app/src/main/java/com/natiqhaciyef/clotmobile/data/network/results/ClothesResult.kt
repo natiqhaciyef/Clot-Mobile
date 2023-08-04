@@ -5,5 +5,5 @@ import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 
 data class ClothesResult(
     @SerializedName("clothes_table")
-    val clothes: List<ClothesModel>
+    val clothes: List<ClothesModel>?
 )
