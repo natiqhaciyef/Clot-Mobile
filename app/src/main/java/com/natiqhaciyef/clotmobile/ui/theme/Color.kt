@@ -54,9 +54,11 @@ val AppOrange = Color(0xffFF7E47)
 
 // Background
 val AppLightPurple = Color(0xffE5D8F6)
+val AppExtraLightPurple = Color(0xFFF0E9FA)
 
 // Button colors
 val AppYellow = Color(0xFFFFB300)
+val AppGray = Color(0xFF9E9E9E)
 
 // Helpers
 val ExtraDarkBlue = Color(0xff101643)
