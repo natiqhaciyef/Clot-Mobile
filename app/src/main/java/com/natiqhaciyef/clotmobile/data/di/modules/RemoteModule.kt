@@ -3,8 +3,10 @@ package com.natiqhaciyef.clotmobile.data.di.modules
 import com.natiqhaciyef.clotmobile.data.network.services.ClothesService
 import com.natiqhaciyef.clotmobile.data.network.NetworkURL
 import com.natiqhaciyef.clotmobile.data.network.services.CoffeeService
+import com.natiqhaciyef.clotmobile.data.network.services.UserService
 import com.natiqhaciyef.clotmobile.data.source.remote.ClothesDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.UserDataSource
 import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.CoffeeRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.ClothesRepositoryImpl
@@ -43,11 +45,19 @@ object RemoteModule {
 
     @Provides
     @Singleton
+    fun provideUserService(network: Retrofit) = network.create(UserService::class.java)
+
+    @Provides
+    @Singleton
     fun provideClothesDataSource(service: ClothesService) = ClothesDataSource(service)
 
     @Provides
     @Singleton
     fun provideCoffeeDataSource(service: CoffeeService) = CoffeeDataSource(service)
+
+    @Provides
+    @Singleton
+    fun provideUserDataSource(service: UserService) = UserDataSource(service)
 
     @Provides
     @Singleton
