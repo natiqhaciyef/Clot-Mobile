@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.natiqhaciyef.clotmobile.common.Status
 import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 import com.natiqhaciyef.clotmobile.data.models.CoffeeModel
-import com.natiqhaciyef.clotmobile.domain.usecases.coffee.GetAllCoffeeUseCase
-import com.natiqhaciyef.clotmobile.domain.usecases.coffee.GetCoffeeByIdUseCase
-import com.natiqhaciyef.clotmobile.domain.usecases.coffee.InsertCoffeeUseCase
-import com.natiqhaciyef.clotmobile.domain.usecases.coffee.RemoveCoffeeUseCase
-import com.natiqhaciyef.clotmobile.domain.usecases.coffee.UpdateCoffeeUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.coffee.GetAllCoffeeUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.coffee.GetCoffeeByIdUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.coffee.InsertCoffeeUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.coffee.RemoveCoffeeUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.coffee.UpdateCoffeeUseCase
 import com.natiqhaciyef.clotmobile.presentation.states.ClothesUIState
 import com.natiqhaciyef.clotmobile.presentation.states.CoffeeUIState
 import dagger.hilt.android.lifecycle.HiltViewModel

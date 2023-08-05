@@ -4,11 +4,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.natiqhaciyef.clotmobile.common.Status
 import com.natiqhaciyef.clotmobile.data.models.ClothesModel
-import com.natiqhaciyef.clotmobile.domain.usecases.clothes.GetAllClothesUseCase
-import com.natiqhaciyef.clotmobile.domain.usecases.clothes.GetClothesByIdUseCase
-import com.natiqhaciyef.clotmobile.domain.usecases.clothes.InsertClothesUseCase
-import com.natiqhaciyef.clotmobile.domain.usecases.clothes.RemoveClothesUseCase
-import com.natiqhaciyef.clotmobile.domain.usecases.clothes.UpdateClothesUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.GetAllClothesUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.GetClothesByIdUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.InsertClothesUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.RemoveClothesUseCase
+import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.UpdateClothesUseCase
 import com.natiqhaciyef.clotmobile.presentation.states.ClothesUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest

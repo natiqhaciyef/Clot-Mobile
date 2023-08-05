@@ -1,4 +1,4 @@
-package com.natiqhaciyef.clotmobile.domain.usecases.coffee
+package com.natiqhaciyef.clotmobile.domain.usecases.remote.coffee
 
 import com.natiqhaciyef.clotmobile.common.Resource
 import com.natiqhaciyef.clotmobile.data.models.CoffeeModel

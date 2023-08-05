@@ -1,25 +1,24 @@
-package com.natiqhaciyef.clotmobile.domain.usecases.clothes
+package com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes
 
 import com.natiqhaciyef.clotmobile.common.Resource
 import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
 import com.natiqhaciyef.techtive.domain.usecases.config.BaseUseCase
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
-class InsertClothesUseCase @Inject constructor(
+class RemoveClothesUseCase @Inject constructor(
     private val clothesRepo: ClothesRepository
 ) {
 
-    suspend operator fun invoke(clothesModel: ClothesModel) = flow {
-        val response = clothesRepo.insertClothes(clothesModel)
+    suspend operator fun invoke(id: Int) = flow{
+        val response = clothesRepo.deleteClothes(id)
         emit(Resource.loading(null))
 
         if (response.success == 1) {
-            emit(Resource.success(BaseUseCase.INSERT_SUCCESS))
+            emit(Resource.success(BaseUseCase.REMOVE_SUCCESS))
         }else{
-            emit(Resource.error(BaseUseCase.INSERT_FAIL, response.message))
+            emit(Resource.error(BaseUseCase.REMOVE_FAIL, response.message))
         }
     }
 }

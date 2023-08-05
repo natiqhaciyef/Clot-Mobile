@@ -1,4 +1,4 @@
-package com.natiqhaciyef.clotmobile.domain.usecases.clothes
+package com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes
 
 import com.natiqhaciyef.clotmobile.common.Resource
 import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository

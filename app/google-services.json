@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "852572233095",
+    "project_id": "clotmobile-4a332",
+    "storage_bucket": "clotmobile-4a332.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852572233095:android:8b741bb5643f10a2d2c722",
+        "android_client_info": {
+          "package_name": "com.natiqhaciyef.clotmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852572233095-k39d9ttqm56si0vv900crsltehaj21n4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.natiqhaciyef.clotmobile",
+            "certificate_hash": "ababf7e2a90e864b5d6453d4a4b2ddab842767a7"
+          }
+        },
+        {
+          "client_id": "852572233095-gdm119k639m901g577l0tc7e37fn63mb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9wkQaq84Vt638CO574IV5gpWp9Z59BPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852572233095-gdm119k639m901g577l0tc7e37fn63mb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
