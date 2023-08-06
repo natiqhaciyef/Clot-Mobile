@@ -4,13 +4,19 @@ import com.natiqhaciyef.clotmobile.data.network.services.ClothesService
 import com.natiqhaciyef.clotmobile.data.network.NetworkURL
 import com.natiqhaciyef.clotmobile.data.network.services.CoffeeService
 import com.natiqhaciyef.clotmobile.data.network.services.UserService
+import com.natiqhaciyef.clotmobile.data.network.services.VideoService
 import com.natiqhaciyef.clotmobile.data.source.remote.ClothesDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.UserDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.VideoDataSource
 import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.CoffeeRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.UserRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.VideoRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.ClothesRepositoryImpl
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.CoffeeRepositoryImpl
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.UserRepositoryImpl
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.VideoRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,6 +55,10 @@ object RemoteModule {
 
     @Provides
     @Singleton
+    fun provideVideoService(network: Retrofit) = network.create(VideoService::class.java)
+
+    @Provides
+    @Singleton
     fun provideClothesDataSource(service: ClothesService) = ClothesDataSource(service)
 
     @Provides
@@ -61,10 +71,22 @@ object RemoteModule {
 
     @Provides
     @Singleton
+    fun provideVideoDataSource(service: VideoService) = VideoDataSource(service)
+
+    @Provides
+    @Singleton
     fun provideClothesRepository(ds: ClothesDataSource) = ClothesRepositoryImpl(ds) as ClothesRepository
 
     @Provides
     @Singleton
     fun provideCoffeeRepository(ds: CoffeeDataSource) = CoffeeRepositoryImpl(ds) as CoffeeRepository
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(ds: UserDataSource) = UserRepositoryImpl(ds) as UserRepository
+
+    @Provides
+    @Singleton
+    fun provideVideoRepository(ds: VideoDataSource) = VideoRepositoryImpl(ds) as VideoRepository
 
 }
