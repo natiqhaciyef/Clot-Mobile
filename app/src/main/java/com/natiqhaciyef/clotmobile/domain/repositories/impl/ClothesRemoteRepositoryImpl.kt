@@ -3,10 +3,10 @@ package com.natiqhaciyef.clotmobile.domain.repositories.impl
 import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 import com.natiqhaciyef.clotmobile.data.network.results.ClothesResult
-import com.natiqhaciyef.clotmobile.data.source.remote.ClothesDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.ClothesRemoteDataSource
 import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
 
-class ClothesRepositoryImpl(private val ds: ClothesDataSource): ClothesRepository {
+class ClothesRemoteRepositoryImpl(private val ds: ClothesRemoteDataSource): ClothesRepository {
     override suspend fun getAllClothes(): ClothesResult = ds.getAllClothes()
 
     override suspend fun getClothesById(id: Int): ClothesModel? = ds.getClothesById(id)

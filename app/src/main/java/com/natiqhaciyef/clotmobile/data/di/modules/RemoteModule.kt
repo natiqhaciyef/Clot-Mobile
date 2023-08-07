@@ -5,18 +5,18 @@ import com.natiqhaciyef.clotmobile.data.network.NetworkURL
 import com.natiqhaciyef.clotmobile.data.network.services.CoffeeService
 import com.natiqhaciyef.clotmobile.data.network.services.UserService
 import com.natiqhaciyef.clotmobile.data.network.services.VideoService
-import com.natiqhaciyef.clotmobile.data.source.remote.ClothesDataSource
-import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeDataSource
-import com.natiqhaciyef.clotmobile.data.source.remote.UserDataSource
-import com.natiqhaciyef.clotmobile.data.source.remote.VideoDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.ClothesRemoteDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeRemoteDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.UserRemoteDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.VideoRemoteDataSource
 import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.CoffeeRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.UserRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.VideoRepository
-import com.natiqhaciyef.clotmobile.domain.repositories.impl.ClothesRepositoryImpl
-import com.natiqhaciyef.clotmobile.domain.repositories.impl.CoffeeRepositoryImpl
-import com.natiqhaciyef.clotmobile.domain.repositories.impl.UserRepositoryImpl
-import com.natiqhaciyef.clotmobile.domain.repositories.impl.VideoRepositoryImpl
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.ClothesRemoteRepositoryImpl
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.CoffeeRemoteRepositoryImpl
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.UserRemoteRepositoryImpl
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.VideoRemoteRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,34 +59,34 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun provideClothesDataSource(service: ClothesService) = ClothesDataSource(service)
+    fun provideClothesDataSource(service: ClothesService) = ClothesRemoteDataSource(service)
 
     @Provides
     @Singleton
-    fun provideCoffeeDataSource(service: CoffeeService) = CoffeeDataSource(service)
+    fun provideCoffeeDataSource(service: CoffeeService) = CoffeeRemoteDataSource(service)
 
     @Provides
     @Singleton
-    fun provideUserDataSource(service: UserService) = UserDataSource(service)
+    fun provideUserDataSource(service: UserService) = UserRemoteDataSource(service)
 
     @Provides
     @Singleton
-    fun provideVideoDataSource(service: VideoService) = VideoDataSource(service)
+    fun provideVideoDataSource(service: VideoService) = VideoRemoteDataSource(service)
 
     @Provides
     @Singleton
-    fun provideClothesRepository(ds: ClothesDataSource) = ClothesRepositoryImpl(ds) as ClothesRepository
+    fun provideClothesRepository(ds: ClothesRemoteDataSource) = ClothesRemoteRepositoryImpl(ds) as ClothesRepository
 
     @Provides
     @Singleton
-    fun provideCoffeeRepository(ds: CoffeeDataSource) = CoffeeRepositoryImpl(ds) as CoffeeRepository
+    fun provideCoffeeRepository(ds: CoffeeRemoteDataSource) = CoffeeRemoteRepositoryImpl(ds) as CoffeeRepository
 
     @Provides
     @Singleton
-    fun provideUserRepository(ds: UserDataSource) = UserRepositoryImpl(ds) as UserRepository
+    fun provideUserRepository(ds: UserRemoteDataSource) = UserRemoteRepositoryImpl(ds) as UserRepository
 
     @Provides
     @Singleton
-    fun provideVideoRepository(ds: VideoDataSource) = VideoRepositoryImpl(ds) as VideoRepository
+    fun provideVideoRepository(ds: VideoRemoteDataSource) = VideoRemoteRepositoryImpl(ds) as VideoRepository
 
 }

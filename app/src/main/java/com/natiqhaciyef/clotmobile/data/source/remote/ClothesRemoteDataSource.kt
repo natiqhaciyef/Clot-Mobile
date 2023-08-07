@@ -7,7 +7,7 @@ import com.natiqhaciyef.clotmobile.data.network.services.ClothesService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ClothesDataSource(
+class ClothesRemoteDataSource(
     private val service: ClothesService
 ) {
     suspend fun getAllClothes(): ClothesResult = withContext(Dispatchers.IO){

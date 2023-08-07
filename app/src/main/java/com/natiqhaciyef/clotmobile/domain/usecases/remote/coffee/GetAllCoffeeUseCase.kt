@@ -2,7 +2,6 @@ package com.natiqhaciyef.clotmobile.domain.usecases.remote.coffee
 
 import com.natiqhaciyef.clotmobile.common.Resource
 import com.natiqhaciyef.clotmobile.domain.repositories.CoffeeRepository
-import com.natiqhaciyef.clotmobile.domain.repositories.impl.CoffeeRepositoryImpl
 import com.natiqhaciyef.techtive.domain.usecases.config.BaseUseCase
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

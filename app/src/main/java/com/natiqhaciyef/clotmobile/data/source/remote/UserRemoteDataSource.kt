@@ -5,7 +5,7 @@ import com.natiqhaciyef.clotmobile.data.network.services.UserService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class UserDataSource (
+class UserRemoteDataSource(
     private val service: UserService
 ) {
 

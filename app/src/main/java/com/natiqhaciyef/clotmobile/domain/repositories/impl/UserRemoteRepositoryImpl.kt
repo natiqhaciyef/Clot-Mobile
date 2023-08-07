@@ -1,11 +1,11 @@
 package com.natiqhaciyef.clotmobile.domain.repositories.impl
 
 import com.natiqhaciyef.clotmobile.data.models.UserModel
-import com.natiqhaciyef.clotmobile.data.source.remote.UserDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.UserRemoteDataSource
 import com.natiqhaciyef.clotmobile.domain.repositories.UserRepository
 
-class UserRepositoryImpl (
-    private val ds: UserDataSource
+class UserRemoteRepositoryImpl (
+    private val ds: UserRemoteDataSource
 ) : UserRepository {
     override suspend fun getUser(email: String) = ds.getUser(email)
 

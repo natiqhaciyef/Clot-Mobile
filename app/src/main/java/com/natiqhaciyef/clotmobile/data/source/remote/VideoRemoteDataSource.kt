@@ -7,7 +7,7 @@ import com.natiqhaciyef.clotmobile.data.network.services.VideoService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class VideoDataSource(private val service: VideoService) {
+class VideoRemoteDataSource (private val service: VideoService) {
 
     suspend fun getVideo(): VideoResult = withContext(Dispatchers.IO){
         service.getVideo()

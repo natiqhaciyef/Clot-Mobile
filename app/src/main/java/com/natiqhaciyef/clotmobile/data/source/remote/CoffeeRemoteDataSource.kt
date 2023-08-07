@@ -7,7 +7,7 @@ import com.natiqhaciyef.clotmobile.data.network.services.CoffeeService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class CoffeeDataSource(
+class CoffeeRemoteDataSource(
     private val service: CoffeeService
 ) {
     suspend fun getAllCoffee(): CoffeeResult = withContext(Dispatchers.IO) {

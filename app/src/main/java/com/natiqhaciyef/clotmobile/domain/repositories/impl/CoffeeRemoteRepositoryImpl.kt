@@ -3,10 +3,10 @@ package com.natiqhaciyef.clotmobile.domain.repositories.impl
 import com.natiqhaciyef.clotmobile.data.models.CoffeeModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 import com.natiqhaciyef.clotmobile.data.network.results.CoffeeResult
-import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeDataSource
+import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeRemoteDataSource
 import com.natiqhaciyef.clotmobile.domain.repositories.CoffeeRepository
 
-class CoffeeRepositoryImpl(private val ds: CoffeeDataSource) : CoffeeRepository  {
+class CoffeeRemoteRepositoryImpl(private val ds: CoffeeRemoteDataSource) : CoffeeRepository  {
     override suspend fun getAllCoffee(): CoffeeResult = ds.getAllCoffee()
 
     override suspend fun getCoffeeById(id: Int): CoffeeModel? = ds.getCoffeeById(id)
