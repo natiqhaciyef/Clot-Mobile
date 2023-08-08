@@ -274,7 +274,7 @@ fun CustomDropDownTitleSelectionBox(
     isEnabled: Boolean = true,
     fontSize: Int = 20
 ) {
-    androidx.compose.material3.Text(
+    Text(
         modifier = Modifier
             .padding(start = 20.dp)
             .fillMaxWidth(),
@@ -525,16 +525,20 @@ fun VideoPlayerItem(
 }
 
 @Composable
-fun VideoSelectorAndPlayer() {
+fun VideoSelectorAndPlayer(
+    link: MutableState<String>,
+    timePeriod: MutableState<String>,
+    videoPlayerViewModel: VideoPlayerViewModel = hiltViewModel(),
+) {
     val selectVideoLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { result ->
             result?.let { uri ->
-//                link.value = uri.toString()
-//                courseDetailsViewModel.addVideoLink(uri.toString())
-//                courseDetailsViewModel.getDuration { duration ->
-//                    timePeriod.value = "$duration"
-//                }
+                link.value = uri.toString()
+                videoPlayerViewModel.addVideoLink(uri.toString())
+                videoPlayerViewModel.getDuration { duration ->
+                    timePeriod.value = "$duration"
+                }
             }
         }
     )
@@ -594,7 +598,7 @@ fun VideoSelectorAndPlayer() {
                 selectVideoLauncher.launch("video/mp4")
             },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = AppOrange
+                backgroundColor = AppYellow
             ),
             shape = RoundedCornerShape(8.dp)
         ) {
