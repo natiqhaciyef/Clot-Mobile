@@ -4,9 +4,9 @@ import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 import com.natiqhaciyef.clotmobile.data.network.results.ClothesResult
 import com.natiqhaciyef.clotmobile.data.source.remote.ClothesRemoteDataSource
-import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.remote.ClothesRemoteRepository
 
-class ClothesRemoteRepositoryImpl(private val ds: ClothesRemoteDataSource): ClothesRepository {
+class ClothesRemoteRepositoryImpl(private val ds: ClothesRemoteDataSource): ClothesRemoteRepository {
     override suspend fun getAllClothes(): ClothesResult = ds.getAllClothes()
 
     override suspend fun getClothesById(id: Int): ClothesModel? = ds.getClothesById(id)

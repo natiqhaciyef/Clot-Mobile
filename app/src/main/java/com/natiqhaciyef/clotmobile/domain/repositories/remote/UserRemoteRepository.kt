@@ -1,9 +1,9 @@
-package com.natiqhaciyef.clotmobile.domain.repositories
+package com.natiqhaciyef.clotmobile.domain.repositories.remote
 
 import com.natiqhaciyef.clotmobile.data.models.UserModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 
-interface UserRepository{
+interface UserRemoteRepository{
 
     suspend fun getUser(email: String): UserModel?
 

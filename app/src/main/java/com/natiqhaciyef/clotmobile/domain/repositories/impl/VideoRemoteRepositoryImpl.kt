@@ -4,9 +4,9 @@ import com.natiqhaciyef.clotmobile.data.models.VideoModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 import com.natiqhaciyef.clotmobile.data.network.results.VideoResult
 import com.natiqhaciyef.clotmobile.data.source.remote.VideoRemoteDataSource
-import com.natiqhaciyef.clotmobile.domain.repositories.VideoRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.remote.VideoRemoteRepository
 
-class VideoRemoteRepositoryImpl(private val ds: VideoRemoteDataSource): VideoRepository {
+class VideoRemoteRepositoryImpl(private val ds: VideoRemoteDataSource): VideoRemoteRepository {
     override suspend fun getVideo(): VideoResult = ds.getVideo()
 
     override suspend fun searchVideo(title: String): VideoModel? = ds.searchVideo(title)

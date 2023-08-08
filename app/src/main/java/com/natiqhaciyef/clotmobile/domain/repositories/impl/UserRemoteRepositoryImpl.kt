@@ -2,11 +2,11 @@ package com.natiqhaciyef.clotmobile.domain.repositories.impl
 
 import com.natiqhaciyef.clotmobile.data.models.UserModel
 import com.natiqhaciyef.clotmobile.data.source.remote.UserRemoteDataSource
-import com.natiqhaciyef.clotmobile.domain.repositories.UserRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.remote.UserRemoteRepository
 
 class UserRemoteRepositoryImpl (
     private val ds: UserRemoteDataSource
-) : UserRepository {
+) : UserRemoteRepository {
     override suspend fun getUser(email: String) = ds.getUser(email)
 
     override suspend fun insertUser(user: UserModel) = ds.insertUser(user)

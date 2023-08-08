@@ -1,10 +1,10 @@
-package com.natiqhaciyef.clotmobile.domain.repositories
+package com.natiqhaciyef.clotmobile.domain.repositories.remote
 
 import com.natiqhaciyef.clotmobile.data.models.VideoModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 import com.natiqhaciyef.clotmobile.data.network.results.VideoResult
 
-interface VideoRepository {
+interface VideoRemoteRepository {
 
     suspend fun getVideo(): VideoResult
 

@@ -1,10 +1,10 @@
-package com.natiqhaciyef.clotmobile.domain.repositories
+package com.natiqhaciyef.clotmobile.domain.repositories.remote
 
 import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 import com.natiqhaciyef.clotmobile.data.network.results.ClothesResult
 
-interface ClothesRepository {
+interface ClothesRemoteRepository {
 
     suspend fun getAllClothes(): ClothesResult
 

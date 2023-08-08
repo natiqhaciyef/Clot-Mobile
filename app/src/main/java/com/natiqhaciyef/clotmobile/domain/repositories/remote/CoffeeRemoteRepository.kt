@@ -1,10 +1,10 @@
-package com.natiqhaciyef.clotmobile.domain.repositories
+package com.natiqhaciyef.clotmobile.domain.repositories.remote
 
 import com.natiqhaciyef.clotmobile.data.models.CoffeeModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 import com.natiqhaciyef.clotmobile.data.network.results.CoffeeResult
 
-interface CoffeeRepository {
+interface CoffeeRemoteRepository {
 
     suspend fun getAllCoffee(): CoffeeResult
 

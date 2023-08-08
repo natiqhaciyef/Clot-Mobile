@@ -9,10 +9,10 @@ import com.natiqhaciyef.clotmobile.data.source.remote.ClothesRemoteDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeRemoteDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.UserRemoteDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.VideoRemoteDataSource
-import com.natiqhaciyef.clotmobile.domain.repositories.ClothesRepository
-import com.natiqhaciyef.clotmobile.domain.repositories.CoffeeRepository
-import com.natiqhaciyef.clotmobile.domain.repositories.UserRepository
-import com.natiqhaciyef.clotmobile.domain.repositories.VideoRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.remote.ClothesRemoteRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.remote.CoffeeRemoteRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.remote.UserRemoteRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.remote.VideoRemoteRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.ClothesRemoteRepositoryImpl
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.CoffeeRemoteRepositoryImpl
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.UserRemoteRepositoryImpl
@@ -75,18 +75,18 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun provideClothesRepository(ds: ClothesRemoteDataSource) = ClothesRemoteRepositoryImpl(ds) as ClothesRepository
+    fun provideClothesRepository(ds: ClothesRemoteDataSource) = ClothesRemoteRepositoryImpl(ds) as ClothesRemoteRepository
 
     @Provides
     @Singleton
-    fun provideCoffeeRepository(ds: CoffeeRemoteDataSource) = CoffeeRemoteRepositoryImpl(ds) as CoffeeRepository
+    fun provideCoffeeRepository(ds: CoffeeRemoteDataSource) = CoffeeRemoteRepositoryImpl(ds) as CoffeeRemoteRepository
 
     @Provides
     @Singleton
-    fun provideUserRepository(ds: UserRemoteDataSource) = UserRemoteRepositoryImpl(ds) as UserRepository
+    fun provideUserRepository(ds: UserRemoteDataSource) = UserRemoteRepositoryImpl(ds) as UserRemoteRepository
 
     @Provides
     @Singleton
-    fun provideVideoRepository(ds: VideoRemoteDataSource) = VideoRemoteRepositoryImpl(ds) as VideoRepository
+    fun provideVideoRepository(ds: VideoRemoteDataSource) = VideoRemoteRepositoryImpl(ds) as VideoRemoteRepository
 
 }

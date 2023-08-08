@@ -1,19 +1,18 @@
-package com.natiqhaciyef.clotmobile.domain.usecases.remote.videos
+package com.natiqhaciyef.clotmobile.domain.usecases.local.clothes
 
 import com.natiqhaciyef.clotmobile.common.Resource
-import com.natiqhaciyef.clotmobile.domain.repositories.remote.VideoRemoteRepository
+import com.natiqhaciyef.clotmobile.domain.repositories.local.ClothesLocalRepository
 import com.natiqhaciyef.techtive.domain.usecases.config.BaseUseCase
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetVideoByTitleUseCase @Inject constructor(
-    private val videoRepo: VideoRemoteRepository
+class GetAllClothesLocalUseCase @Inject constructor(
+    private val clothesLocalRepository: ClothesLocalRepository
 ) {
 
-    suspend operator fun invoke(title: String) = flow{
+    suspend operator fun invoke() = flow{
         emit(Resource.loading(null))
-
-        val response = videoRepo.searchVideo(title = title)
+        val response = clothesLocalRepository.getAllClothes()
         if (response != null){
             emit(Resource.success(response))
         }else{
