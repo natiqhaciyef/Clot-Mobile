@@ -40,14 +40,17 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
 import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.StarHalf
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
@@ -71,6 +74,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -82,17 +87,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.media3.ui.PlayerView
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.natiqhaciyef.clotmobile.R
 import com.natiqhaciyef.clotmobile.common.util.classes.NavItemModel
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Lobster
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.VideoPlayerViewModel
-import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
-import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightPurple
+import com.natiqhaciyef.clotmobile.ui.theme.AppDarkBrown
 import com.natiqhaciyef.clotmobile.ui.theme.AppGray
-import com.natiqhaciyef.clotmobile.ui.theme.AppLightPurple
-import com.natiqhaciyef.clotmobile.ui.theme.AppOrange
-import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
+import com.natiqhaciyef.clotmobile.ui.theme.AppBrown
+import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightBrown
 import com.natiqhaciyef.clotmobile.ui.theme.AppYellow
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -111,7 +113,7 @@ fun NavBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
-            .background(AppPurple, RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+            .background(AppBrown, RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
     ) {
 
         Row(
@@ -148,7 +150,7 @@ fun NavBar(
                                 painter = painterResource(id = icon.image),
                                 contentDescription = "content",
                                 modifier = Modifier.size(25.dp),
-                                tint = if (selectedIndex.value == index) Color.White else AppLightPurple
+                                tint = if (selectedIndex.value == index) Color.White else AppExtraLightBrown
                             )
                         }
                         AnimatedVisibility(visible = (selectedIndex.value == index)) {
@@ -168,7 +170,7 @@ fun NavBar(
 }
 
 @Composable
-fun InputBox(
+fun InputBoxTitle(
     modifier: Modifier = Modifier,
     modifierInput: Modifier = Modifier,
     concept: String,
@@ -181,7 +183,7 @@ fun InputBox(
 ) {
     val focusManager = LocalFocusManager.current
 
-    androidx.compose.material3.Text(
+   Text(
         modifier = modifier
             .padding(start = 20.dp)
             .fillMaxWidth(),
@@ -240,11 +242,11 @@ fun InputBox(
             }
         },
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = AppDarkPurple,
-            focusedBorderColor = AppLightPurple,
-            cursorColor = AppDarkPurple,
-            focusedTextColor = AppDarkPurple,
-            unfocusedTextColor = AppDarkPurple,
+            unfocusedBorderColor = AppDarkBrown,
+            focusedBorderColor = AppExtraLightBrown,
+            cursorColor = AppDarkBrown,
+            focusedTextColor = AppDarkBrown,
+            unfocusedTextColor = AppDarkBrown,
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,
             focusedPlaceholderColor = AppGray,
@@ -256,6 +258,374 @@ fun InputBox(
         ),
         placeholder = {
             androidx.compose.material3.Text(
+                text = "Enter ${concept.lowercase()}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+            )
+        }
+    )
+}
+
+
+@Composable
+fun OutlinedInputBox(
+    modifier: Modifier = Modifier,
+    concept: String,
+    input: MutableState<String>,
+    isSingleLine: Boolean,
+    type: KeyboardType = KeyboardType.Text,
+    prefix: String = "",
+    trailingIcon: MutableState<ImageVector?> = mutableStateOf(null),
+    leadingIcon: MutableState<ImageVector?> = mutableStateOf(null),
+    onClick: (String) -> Unit = { }
+) {
+    val focusManager = LocalFocusManager.current
+
+    OutlinedTextField(
+        modifier = modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxWidth(),
+        value = input.value,
+        onValueChange = {
+            input.value = it
+        },
+        shape = RoundedCornerShape(8.dp),
+        enabled = true,
+        singleLine = isSingleLine,
+        readOnly = false,
+        keyboardActions = KeyboardActions(onNext = {
+            focusManager.moveFocus(FocusDirection.Down)
+        }),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = type,
+            imeAction = ImeAction.Next
+        ),
+        trailingIcon = {
+            if (trailingIcon.value != null) {
+                androidx.compose.material3.Icon(
+                    modifier = Modifier
+                        .padding(end = 10.dp)
+                        .size(28.dp)
+                        .clickable {
+                            onClick(input.value)
+                        },
+                    imageVector = trailingIcon.value!!,
+                    contentDescription = "Icon"
+                )
+            }
+        },
+        prefix = {
+            if (prefix.isNotEmpty()) {
+                Text(
+                    text = prefix,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            } else {
+                Text(
+                    text = "",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            }
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = AppDarkBrown,
+            focusedBorderColor = AppExtraLightBrown,
+            cursorColor = AppDarkBrown,
+            focusedTextColor = AppDarkBrown,
+            unfocusedTextColor = AppDarkBrown,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            focusedPlaceholderColor = AppGray,
+            unfocusedPlaceholderColor = AppGray
+        ),
+        textStyle = TextStyle.Default.copy(
+            fontSize = 17.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        placeholder = {
+            androidx.compose.material3.Text(
+                text = "Enter ${concept.lowercase()}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+            )
+        }
+    )
+}
+
+
+@Composable
+fun OutlinedPasswordBox(
+    modifier: Modifier = Modifier,
+    concept: String,
+    input: MutableState<String>,
+    passVisibility: MutableState<Boolean>,
+    isSingleLine: Boolean,
+    type: KeyboardType = KeyboardType.Text,
+    prefix: String = "",
+    trailingIcon: MutableState<ImageVector?> = mutableStateOf(null),
+    leadingIcon: MutableState<ImageVector?> = mutableStateOf(null),
+    onClick: (String) -> Unit = { },
+) {
+    val focusManager = LocalFocusManager.current
+
+    OutlinedTextField(
+        modifier = modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxWidth(),
+        value = input.value,
+        onValueChange = {
+            input.value = it
+        },
+        shape = RoundedCornerShape(8.dp),
+        enabled = true,
+        singleLine = isSingleLine,
+        readOnly = false,
+        keyboardActions = KeyboardActions(onNext = {
+            focusManager.moveFocus(FocusDirection.Down)
+        }),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = type,
+            imeAction = ImeAction.Next
+        ),
+        visualTransformation = if (passVisibility.value) VisualTransformation.None
+        else PasswordVisualTransformation(),
+        trailingIcon = {
+            if (trailingIcon.value != null) {
+                androidx.compose.material3.Icon(
+                    modifier = Modifier
+                        .padding(end = 10.dp)
+                        .size(28.dp)
+                        .clickable {
+                            onClick(input.value)
+                        },
+                    imageVector = trailingIcon.value!!,
+                    contentDescription = "Icon"
+                )
+            }
+        },
+        prefix = {
+            if (prefix.isNotEmpty()) {
+                Text(
+                    text = prefix,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            } else {
+                Text(
+                    text = "",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            }
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = AppDarkBrown,
+            focusedBorderColor = AppExtraLightBrown,
+            cursorColor = AppDarkBrown,
+            focusedTextColor = AppDarkBrown,
+            unfocusedTextColor = AppDarkBrown,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            focusedPlaceholderColor = AppGray,
+            unfocusedPlaceholderColor = AppGray
+        ),
+        textStyle = TextStyle.Default.copy(
+            fontSize = 17.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        placeholder = {
+            Text(
+                text = "Enter ${concept.lowercase()}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+            )
+        }
+    )
+}
+
+
+@Composable
+fun InputBox(
+    modifier: Modifier = Modifier,
+    concept: String,
+    input: MutableState<String>,
+    isSingleLine: Boolean,
+    type: KeyboardType = KeyboardType.Text,
+    prefix: String = "",
+    trailingIcon: MutableState<ImageVector?> = mutableStateOf(null),
+    leadingIcon: MutableState<ImageVector?> = mutableStateOf(null),
+    onClick: (String) -> Unit = { }
+) {
+    val focusManager = LocalFocusManager.current
+
+    TextField(
+        modifier = modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxWidth(),
+        value = input.value,
+        onValueChange = {
+            input.value = it
+        },
+        shape = RoundedCornerShape(8.dp),
+        enabled = true,
+        singleLine = isSingleLine,
+        readOnly = false,
+        keyboardActions = KeyboardActions(onNext = {
+            focusManager.moveFocus(FocusDirection.Down)
+        }),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = type,
+            imeAction = ImeAction.Next
+        ),
+        trailingIcon = {
+            if (trailingIcon.value != null) {
+                androidx.compose.material3.Icon(
+                    modifier = Modifier
+                        .padding(end = 10.dp)
+                        .size(28.dp)
+                        .clickable {
+                            onClick(input.value)
+                        },
+                    imageVector = trailingIcon.value!!,
+                    contentDescription = "Icon"
+                )
+            }
+        },
+        prefix = {
+            if (prefix.isNotEmpty()) {
+                Text(
+                    text = prefix,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            } else {
+                Text(
+                    text = "",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            }
+        },
+        colors = TextFieldDefaults.colors(
+            cursorColor = AppDarkBrown,
+            focusedTextColor = AppDarkBrown,
+            unfocusedTextColor = AppDarkBrown,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            focusedPlaceholderColor = AppGray,
+            unfocusedPlaceholderColor = AppGray,
+            disabledIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        ),
+        textStyle = TextStyle.Default.copy(
+            fontSize = 17.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        placeholder = {
+            Text(
+                text = "Enter ${concept.lowercase()}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+            )
+        }
+    )
+}
+
+
+@Composable
+fun PasswordBox(
+    modifier: Modifier = Modifier,
+    concept: String,
+    input: MutableState<String>,
+    passVisibility: MutableState<Boolean>,
+    isSingleLine: Boolean,
+    type: KeyboardType = KeyboardType.Text,
+    prefix: String = "",
+    onClick: (String) -> Unit = { },
+) {
+    val focusManager = LocalFocusManager.current
+
+    TextField(
+        modifier = modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxWidth(),
+        value = input.value,
+        onValueChange = {
+            input.value = it
+        },
+        shape = RoundedCornerShape(8.dp),
+        enabled = true,
+        singleLine = isSingleLine,
+        readOnly = false,
+        keyboardActions = KeyboardActions(onNext = {
+            focusManager.moveFocus(FocusDirection.Down)
+        }),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = type,
+            imeAction = ImeAction.Next
+        ),
+        visualTransformation = if (passVisibility.value) VisualTransformation.None
+        else PasswordVisualTransformation(),
+        trailingIcon = {
+            if (passVisibility.value)
+                androidx.compose.material3.Icon(
+                    modifier = Modifier
+                        .padding(end = 20.dp)
+                        .size(28.dp)
+                        .clickable {
+                            onClick(input.value)
+                        },
+                    imageVector = Icons.Default.Visibility,
+                    contentDescription = "Icon"
+                )
+            else
+                androidx.compose.material3.Icon(
+                    modifier = Modifier
+                        .padding(end = 20.dp)
+                        .size(28.dp)
+                        .clickable {
+                            onClick(input.value)
+                        },
+                    imageVector = Icons.Default.VisibilityOff,
+                    contentDescription = "Icon"
+                )
+        },
+        prefix = {
+            if (prefix.isNotEmpty()) {
+                Text(
+                    text = prefix,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            } else {
+                Text(
+                    text = "",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            }
+        },
+        colors = TextFieldDefaults.colors(
+            cursorColor = AppDarkBrown,
+            focusedTextColor = AppDarkBrown,
+            unfocusedTextColor = AppDarkBrown,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            focusedPlaceholderColor = AppGray,
+            unfocusedPlaceholderColor = AppGray,
+            disabledIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        ),
+        textStyle = TextStyle.Default.copy(
+            fontSize = 17.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        placeholder = {
+            Text(
                 text = "Enter ${concept.lowercase()}",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -311,7 +681,7 @@ fun CustomDropDownMenu(
         modifier = modifier
             .border(
                 1.dp,
-                AppDarkPurple,
+                AppDarkBrown,
                 shape = RoundedCornerShape(10.dp)
             ),
         expanded = expanded,
@@ -319,14 +689,14 @@ fun CustomDropDownMenu(
             expanded = !expanded
         },
     ) {
-        TextField(
+        androidx.compose.material.TextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp)),
             value = selectedOption.value,
             onValueChange = { },
             textStyle = TextStyle.Default.copy(
-                color = AppDarkPurple,
+                color = AppDarkBrown,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold,
             ),
@@ -344,8 +714,8 @@ fun CustomDropDownMenu(
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(
                 backgroundColor = Color.White,
-                textColor = AppDarkPurple
-                )
+                textColor = AppDarkBrown
+            )
         )
 
         ExposedDropdownMenu(
@@ -365,7 +735,7 @@ fun CustomDropDownMenu(
                 ) {
                     Text(
                         text = option,
-                        color = AppDarkPurple,
+                        color = AppDarkBrown,
                         fontSize = 15.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Center
@@ -461,7 +831,7 @@ fun VideoPlayerItem(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppExtraLightPurple)
+            .background(AppExtraLightBrown)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -485,7 +855,7 @@ fun VideoPlayerItem(
                     SpanStyle(
                         fontSize = 25.sp,
                         fontFamily = Lobster.lobster,
-                        color = AppPurple,
+                        color = AppBrown,
                         fontWeight = FontWeight.Bold
                     )
                 ) {
@@ -560,7 +930,7 @@ fun VideoSelectorAndPlayer(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppExtraLightPurple)
+            .background(AppExtraLightBrown)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

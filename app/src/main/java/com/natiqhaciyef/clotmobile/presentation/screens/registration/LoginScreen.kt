@@ -18,9 +18,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,18 +42,17 @@ import com.natiqhaciyef.clotmobile.presentation.components.PasswordBox
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
 import com.natiqhaciyef.clotmobile.presentation.navigation.ScreenId
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
+import com.natiqhaciyef.clotmobile.ui.theme.AppDarkBrown
 import com.natiqhaciyef.clotmobile.ui.theme.AppRed
 import com.natiqhaciyef.clotmobile.ui.theme.AppBrown
 import com.natiqhaciyef.clotmobile.ui.theme.LightGray
 
 @Composable
-fun RegisterScreen(
+fun LoginScreen(
     navController: NavController,
     registrationViewModel: RegistrationViewModel = hiltViewModel()
 ) {
-    val name = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
-    val phone = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val passwordVisibility = remember { mutableStateOf(false) }
 
@@ -71,7 +68,7 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 25.dp),
-            text = "Sign up",
+            text = "Sign in",
             fontSize = 27.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = Opensans.opensans,
@@ -79,34 +76,20 @@ fun RegisterScreen(
         )
         Spacer(modifier = Modifier.height(20.dp))
         InputBox(
-            modifier = Modifier.fillMaxWidth().height(55.dp),
-            concept = "Full name",
-            input = name,
-            trailingIcon = remember{ mutableStateOf(Icons.Outlined.AccountCircle) },
-            isSingleLine = true,
-        )
-        Spacer(modifier = Modifier.height(15.dp))
-        InputBox(
-            modifier = Modifier.fillMaxWidth().height(55.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(55.dp),
             concept = "Email",
             input = email,
             isSingleLine = true,
-            trailingIcon = remember{ mutableStateOf(Icons.Outlined.Email) },
+            trailingIcon = remember { mutableStateOf(Icons.Outlined.Email) },
             type = KeyboardType.Email
         )
         Spacer(modifier = Modifier.height(15.dp))
-        InputBox(
-            modifier = Modifier.fillMaxWidth().height(55.dp),
-            concept = "Phone",
-            input = phone,
-            isSingleLine = true,
-            type = KeyboardType.Number,
-            trailingIcon = remember{ mutableStateOf(Icons.Outlined.Phone) },
-            prefix = "+994 "
-        )
-        Spacer(modifier = Modifier.height(15.dp))
         PasswordBox(
-            modifier = Modifier.fillMaxWidth().height(55.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(55.dp),
             concept = "Password",
             input = password,
             passVisibility = passwordVisibility,
@@ -114,6 +97,20 @@ fun RegisterScreen(
             onClick = {
                 passwordVisibility.value = !passwordVisibility.value
             }
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 25.dp)
+                .clickable {
+                    navController.navigate(ScreenId.ForgotPasswordScreen.name)
+                },
+            text = "Forgot password ?",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            color = AppDarkBrown,
+            textAlign = TextAlign.End
         )
         Spacer(modifier = Modifier.height(40.dp))
         Button(
@@ -133,7 +130,7 @@ fun RegisterScreen(
                 Text(
                     modifier = Modifier
                         .align(Alignment.Center),
-                    text = "Create account",
+                    text = "Sign in",
                     fontWeight = FontWeight.Bold,
                     fontSize = 17.sp,
                     color = Color.White
@@ -152,7 +149,7 @@ fun RegisterScreen(
                         color = Color.Black
                     )
                 ) {
-                    append("Do you have an account ?  ")
+                    append("Don't have an account ?  ")
                 }
 
                 withStyle(
@@ -162,14 +159,14 @@ fun RegisterScreen(
                         color = AppRed
                     )
                 ) {
-                    append("Sign in")
+                    append("Sign up")
                 }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
                 .clickable {
-                           navController.navigate(ScreenId.LoginScreen.name)
+                    navController.navigate(ScreenId.RegisterScreen.name)
                 },
             textAlign = TextAlign.Center
         )
