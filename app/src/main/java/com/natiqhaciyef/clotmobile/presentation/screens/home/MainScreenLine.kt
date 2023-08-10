@@ -31,8 +31,8 @@ fun MainScreenLine(
 ) {
     val isAdmin = remember { mutableStateOf(false) }
     registrationViewModel.getUserType(
-        onSuccess =  {
-            isAdmin.value = true
+        onSuccess = { user ->
+            isAdmin.value = user.type == "Admin"
         },
         onError = {
             isAdmin.value = false
@@ -44,7 +44,7 @@ fun MainScreenLine(
         bottomBar = {
             NavBar(
                 selectedIndex = selectedIndex,
-                list = if(isAdmin.value) {
+                list = if (isAdmin.value) {
                     mutableListOf(
                         NavItemModel(image = Icons.Outlined.Home, title = "Home"),
                         NavItemModel(image = Icons.Outlined.FavoriteBorder, title = "Liked"),
