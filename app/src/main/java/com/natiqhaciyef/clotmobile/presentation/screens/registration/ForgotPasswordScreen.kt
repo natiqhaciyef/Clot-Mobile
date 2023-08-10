@@ -39,10 +39,8 @@ import com.natiqhaciyef.clotmobile.R
 import com.natiqhaciyef.clotmobile.presentation.components.InputBox
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
-import com.natiqhaciyef.clotmobile.ui.theme.AppBrown
-import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightBrown
-import com.natiqhaciyef.clotmobile.ui.theme.AppYellow
-import com.natiqhaciyef.clotmobile.ui.theme.Yellow
+import com.natiqhaciyef.clotmobile.ui.theme.AppLightOrange
+import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
 
 @Composable
 fun ForgotPasswordScreen(
@@ -70,7 +68,7 @@ fun ForgotPasswordScreen(
                 .fillMaxWidth()
                 .fillMaxHeight(),
             colors = CardDefaults.cardColors(
-                containerColor = AppBrown
+                containerColor = AppPurple
             ),
             shape = RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp)
         ) {
@@ -125,7 +123,7 @@ fun ForgotPasswordScreen(
                     },
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = AppYellow
+                        backgroundColor = AppLightOrange
                     )
                 ) {
                     Text(

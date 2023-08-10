@@ -45,7 +45,7 @@ import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
 import com.natiqhaciyef.clotmobile.presentation.navigation.ScreenId
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppRed
-import com.natiqhaciyef.clotmobile.ui.theme.AppBrown
+import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
 import com.natiqhaciyef.clotmobile.ui.theme.LightGray
 
 @Composable
@@ -126,7 +126,7 @@ fun RegisterScreen(
             },
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = AppBrown
+                backgroundColor = AppPurple
             )
         ) {
             Box(modifier = Modifier.fillMaxSize()) {

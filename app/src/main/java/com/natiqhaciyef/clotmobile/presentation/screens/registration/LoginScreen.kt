@@ -44,7 +44,7 @@ import com.natiqhaciyef.clotmobile.presentation.navigation.ScreenId
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkBrown
 import com.natiqhaciyef.clotmobile.ui.theme.AppRed
-import com.natiqhaciyef.clotmobile.ui.theme.AppBrown
+import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
 import com.natiqhaciyef.clotmobile.ui.theme.LightGray
 
 @Composable
@@ -123,7 +123,7 @@ fun LoginScreen(
             },
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = AppBrown
+                backgroundColor = AppPurple
             )
         ) {
             Box(modifier = Modifier.fillMaxSize()) {

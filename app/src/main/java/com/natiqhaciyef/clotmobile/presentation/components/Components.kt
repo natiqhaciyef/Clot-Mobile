@@ -92,9 +92,9 @@ import com.natiqhaciyef.clotmobile.common.util.classes.NavItemModel
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Lobster
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.VideoPlayerViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkBrown
+import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppGray
-import com.natiqhaciyef.clotmobile.ui.theme.AppBrown
-import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightBrown
+import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppYellow
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -113,7 +113,7 @@ fun NavBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
-            .background(AppBrown, RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+            .background(AppPurple, RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
     ) {
 
         Row(
@@ -150,7 +150,7 @@ fun NavBar(
                                 painter = painterResource(id = icon.image),
                                 contentDescription = "content",
                                 modifier = Modifier.size(25.dp),
-                                tint = if (selectedIndex.value == index) Color.White else AppExtraLightBrown
+                                tint = if (selectedIndex.value == index) Color.White else AppExtraLightPurple
                             )
                         }
                         AnimatedVisibility(visible = (selectedIndex.value == index)) {
@@ -243,7 +243,7 @@ fun InputBoxTitle(
         },
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = AppDarkBrown,
-            focusedBorderColor = AppExtraLightBrown,
+            focusedBorderColor = AppExtraLightPurple,
             cursorColor = AppDarkBrown,
             focusedTextColor = AppDarkBrown,
             unfocusedTextColor = AppDarkBrown,
@@ -331,7 +331,7 @@ fun OutlinedInputBox(
         },
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = AppDarkBrown,
-            focusedBorderColor = AppExtraLightBrown,
+            focusedBorderColor = AppExtraLightPurple,
             cursorColor = AppDarkBrown,
             focusedTextColor = AppDarkBrown,
             unfocusedTextColor = AppDarkBrown,
@@ -422,7 +422,7 @@ fun OutlinedPasswordBox(
         },
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = AppDarkBrown,
-            focusedBorderColor = AppExtraLightBrown,
+            focusedBorderColor = AppExtraLightPurple,
             cursorColor = AppDarkBrown,
             focusedTextColor = AppDarkBrown,
             unfocusedTextColor = AppDarkBrown,
@@ -831,7 +831,7 @@ fun VideoPlayerItem(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppExtraLightBrown)
+            .background(AppExtraLightPurple)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -855,7 +855,7 @@ fun VideoPlayerItem(
                     SpanStyle(
                         fontSize = 25.sp,
                         fontFamily = Lobster.lobster,
-                        color = AppBrown,
+                        color = AppPurple,
                         fontWeight = FontWeight.Bold
                     )
                 ) {
@@ -930,7 +930,7 @@ fun VideoSelectorAndPlayer(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppExtraLightBrown)
+            .background(AppExtraLightPurple)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

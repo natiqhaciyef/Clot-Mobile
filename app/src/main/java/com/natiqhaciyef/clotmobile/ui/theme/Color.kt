@@ -49,14 +49,16 @@ val TealLightBlack = Color(0xff28605f)
 val TealExtraLight = Color(0x88B4FFDF)
 
 val AppDarkBrown = Color(0xff38220f)
-val AppBrown = Color(0xff634832)
-val AppRed = Color(0xffFF0A0A)
+val AppPurple = Color(0xff9747FF)
+val AppOrange = Color(0xffFF7E47)
 
 // Background
-val AppLightBrown = Color(0xffDBC1AC)
-val AppExtraLightBrown = Color(0xffECDFD1)
+val AppLightPurple = Color(0xffE5D8F6)
+val AppDarkPurple = Color(0xff3F1651)
+val AppExtraLightPurple = Color(0xFFF0E9FA)
 
 // Button colors
+val AppLightOrange = Color(0xFFF5C7A3)
 val AppYellow = Color(0xFFFFB300)
 val AppGray = Color(0xFF9E9E9E)
 
@@ -64,5 +66,6 @@ val AppGray = Color(0xFF9E9E9E)
 val ExtraDarkBlue = Color(0xff101643)
 val Gray = Color(0xFF9E9E9E)
 val LightGray = Color(0xFFEBEBEB)
+val AppRed = Color(0xffFF0A0A)
 
 
