@@ -1,6 +1,7 @@
 package com.natiqhaciyef.clotmobile.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -38,4 +39,9 @@ fun AppNavigation() {
 
     }
 
+}
+
+
+object BottomNavigationIndex {
+    val bottomNavigationIndex = mutableStateOf(0)
 }

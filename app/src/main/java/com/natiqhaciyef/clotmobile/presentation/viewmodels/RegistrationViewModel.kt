@@ -1,8 +1,10 @@
 package com.natiqhaciyef.clotmobile.presentation.viewmodels
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.natiqhaciyef.clotmobile.common.Status
 import com.natiqhaciyef.clotmobile.data.models.UserModel
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.FirebaseRepositoryImpl
 import com.natiqhaciyef.clotmobile.domain.usecases.firebase.LoginUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.firebase.RegisterUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.firebase.ResetPasswordUseCase
@@ -17,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
+    val firebaseRepo: FirebaseRepositoryImpl,
     private val loginUseCase: LoginUseCase,
     private val registerUseCase: RegisterUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
@@ -25,6 +28,23 @@ class RegistrationViewModel @Inject constructor(
     private val removeUserUseCase: RemoveUserUseCase,
     private val updateUserUseCase: UpdateUserUseCase
 ) : BaseViewModel() {
+
+    fun getUserType(
+        onSuccess: (UserModel) -> Unit = { },
+        onError: () -> Unit = { }
+    ) {
+        viewModelScope.launch {
+            firebaseRepo.auth.currentUser?.let { currentUser ->
+                currentUser.email?.let { email ->
+                    getUser(
+                        email,
+                        onSuccess = onSuccess,
+                        onError = onError
+                    )
+                }
+            }
+        }
+    }
 
     fun loginUserFromFirebase(
         userModel: UserModel,
@@ -68,7 +88,7 @@ class RegistrationViewModel @Inject constructor(
         viewModelScope.launch {
             resetPasswordUseCase.invoke(email = email,
                 onSuccess = {
-                    getUser(email = email,  onSuccess = { user ->
+                    getUser(email = email, onSuccess = { user ->
                         removeUser(id = user.id)
                     })
                 }, onFail = {
@@ -156,7 +176,7 @@ class RegistrationViewModel @Inject constructor(
     }
 
 
-    fun getUser(
+    private fun getUser(
         email: String,
         onSuccess: (UserModel) -> Unit = { },
         onError: () -> Unit = { },

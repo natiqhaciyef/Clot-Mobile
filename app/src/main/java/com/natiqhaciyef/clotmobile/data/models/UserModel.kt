@@ -1,6 +1,7 @@
 package com.natiqhaciyef.clotmobile.data.models
 
 import com.google.gson.annotations.SerializedName
+import com.natiqhaciyef.clotmobile.data.models.enums.UserTypes
 
 data class UserModel(
     @SerializedName("id")
@@ -12,5 +13,7 @@ data class UserModel(
     @SerializedName("phone")
     var phone: String,
     @SerializedName("password")
-    var password: String
+    var password: String,
+    @SerializedName("type")
+    var type: String = UserTypes.User.name
 )

@@ -1,0 +1,90 @@
+package com.natiqhaciyef.clotmobile.presentation.screens.home
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material.icons.outlined.Token
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.natiqhaciyef.clotmobile.R
+import com.natiqhaciyef.clotmobile.common.util.classes.NavItemModel
+import com.natiqhaciyef.clotmobile.presentation.components.NavBar
+import com.natiqhaciyef.clotmobile.presentation.navigation.BottomNavigationIndex
+import com.natiqhaciyef.clotmobile.presentation.viewmodels.ClothesViewModel
+import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
+
+@Composable
+fun MainScreenLine(
+    navController: NavController,
+    selectedIndex: MutableState<Int> = BottomNavigationIndex.bottomNavigationIndex,
+    registrationViewModel: RegistrationViewModel = hiltViewModel(),
+) {
+    val isAdmin = remember { mutableStateOf(false) }
+    registrationViewModel.getUserType(
+        onSuccess =  {
+            isAdmin.value = true
+        },
+        onError = {
+            isAdmin.value = false
+        }
+    )
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            NavBar(
+                selectedIndex = selectedIndex,
+                list = if(isAdmin.value) {
+                    mutableListOf(
+                        NavItemModel(image = Icons.Outlined.Home, title = "Home"),
+                        NavItemModel(image = Icons.Outlined.FavoriteBorder, title = "Liked"),
+                        NavItemModel(image = Icons.Outlined.ShoppingCart, title = "Cart"),
+                        NavItemModel(image = Icons.Outlined.AccountCircle, title = "Profile"),
+                        NavItemModel(image = Icons.Outlined.Token, title = "Admin"),
+                    )
+
+                } else {
+                    mutableListOf(
+                        NavItemModel(image = Icons.Outlined.Home, title = "Home"),
+                        NavItemModel(image = Icons.Outlined.FavoriteBorder, title = "Liked"),
+                        NavItemModel(image = Icons.Outlined.ShoppingCart, title = "Cart"),
+                        NavItemModel(image = Icons.Outlined.AccountCircle, title = "Profile"),
+                    )
+                }
+            )
+        }
+    ) {
+        it.calculateBottomPadding()
+        when (selectedIndex.value) {
+            0 -> {
+                HomeScreen(navController)
+            }
+
+            1 -> {
+                // Saved posts screen
+            }
+
+            2 -> {
+                // Cart screen
+            }
+
+            3 -> {
+                // User profile
+            }
+
+            4 -> {
+                // Admin profile
+            }
+        }
+    }
+}
