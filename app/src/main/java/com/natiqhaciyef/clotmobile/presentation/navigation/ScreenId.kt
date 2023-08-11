@@ -5,4 +5,6 @@ enum class ScreenId {
     RegisterScreen,
     LoginScreen,
     ForgotPasswordScreen,
+
+    MainScreenLine,
 }

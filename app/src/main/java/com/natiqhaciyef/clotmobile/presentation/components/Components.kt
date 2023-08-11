@@ -102,11 +102,7 @@ import kotlin.math.floor
 @Composable
 fun NavBar(
     selectedIndex: MutableState<Int>,
-    list: MutableList<NavItemModel> = mutableListOf(
-        NavItemModel(image = R.drawable.home_icon, title = "Home"),
-        NavItemModel(image = R.drawable.academy_building_icon, title = "Courses"),
-        NavItemModel(image = R.drawable.user_profile_icon, title = "Profile"),
-    )
+    list: MutableList<NavItemModel> = mutableListOf()
 ) {
 
     Box(
@@ -147,7 +143,7 @@ fun NavBar(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(id = icon.image),
+                                imageVector = icon.image,
                                 contentDescription = "content",
                                 modifier = Modifier.size(25.dp),
                                 tint = if (selectedIndex.value == index) Color.White else AppExtraLightPurple
