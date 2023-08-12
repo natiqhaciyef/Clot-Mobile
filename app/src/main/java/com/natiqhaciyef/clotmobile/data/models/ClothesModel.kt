@@ -26,6 +26,8 @@ data class ClothesModel(
     var image: String,
     @SerializedName("type")
     var type: String,
+    @SerializedName("category")
+    var category: String,
     @SerializedName("cargo_price")
     var cargoPrice: Double,
     @SerializedName("season")

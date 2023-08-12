@@ -16,8 +16,10 @@ class InsertClothesUseCase @Inject constructor(
         emit(Resource.loading(null))
 
         if (response.success == 1) {
+            println(response.message)
             emit(Resource.success(BaseUseCase.INSERT_SUCCESS))
         }else{
+            println(response.message)
             emit(Resource.error(BaseUseCase.INSERT_FAIL, response.message))
         }
     }

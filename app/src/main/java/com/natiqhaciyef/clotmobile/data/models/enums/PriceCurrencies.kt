@@ -1,9 +1,10 @@
 package com.natiqhaciyef.clotmobile.data.models.enums
 
-enum class PriceCurrencies {
-    USD,
-    AZN,
-    EURO,
-    CAD,
-    TL,
+enum class PriceCurrencies(val sign: String) {
+    USD ("$"),
+    AZN ("Azn"),
+    EURO ("€"),
+    Pound ("£"),
+    CAD ("$ CAD"),
+    TL ("TL");
 }

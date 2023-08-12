@@ -4,6 +4,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.natiqhaciyef.clotmobile.common.Status
 import com.natiqhaciyef.clotmobile.data.models.ClothesModel
+import com.natiqhaciyef.clotmobile.data.models.enums.ClothesCategory
+import com.natiqhaciyef.clotmobile.data.models.enums.ClothesSizes
+import com.natiqhaciyef.clotmobile.data.models.enums.PriceCurrencies
+import com.natiqhaciyef.clotmobile.data.models.enums.Seasons
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.GetAllClothesUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.GetClothesByIdUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.InsertClothesUseCase
@@ -96,7 +100,7 @@ class ClothesViewModel @Inject constructor(
                     }
 
                     Status.LOADING -> {
-                       onLoading()
+                        onLoading()
                     }
                 }
             }

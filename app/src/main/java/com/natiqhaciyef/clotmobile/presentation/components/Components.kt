@@ -86,7 +86,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.media3.ui.PlayerView
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.natiqhaciyef.clotmobile.R
 import com.natiqhaciyef.clotmobile.common.util.classes.NavItemModel
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Lobster
@@ -784,7 +784,7 @@ fun ImageSelection(
     isPermissionGranted: MutableState<Boolean>,
 ) {
     Image(
-        painter = if (image.value != null) rememberAsyncImagePainter(image.value)
+        painter = if (image.value != null) rememberImagePainter(image.value)
         else painterResource(id = R.drawable.non),
         contentDescription = "Image",
         modifier = Modifier
