@@ -1,6 +1,7 @@
 package com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes
 
 import com.natiqhaciyef.clotmobile.common.Resource
+import com.natiqhaciyef.clotmobile.common.helpers.Mapper
 import com.natiqhaciyef.clotmobile.domain.repositories.remote.ClothesRemoteRepository
 import com.natiqhaciyef.techtive.domain.usecases.config.BaseUseCase
 import kotlinx.coroutines.flow.flow
@@ -14,7 +15,7 @@ class GetClothesByIdUseCase @Inject constructor(
         emit(Resource.loading(null))
         val clothes = clothesRepo.getClothesById(id)
         if (clothes != null){
-            emit(Resource.success(clothes))
+            emit(Resource.success(Mapper.mapToClothesMappedModel(clothes)))
         }else{
             emit(Resource.error(BaseUseCase.LOADING_FAIL, null))
         }

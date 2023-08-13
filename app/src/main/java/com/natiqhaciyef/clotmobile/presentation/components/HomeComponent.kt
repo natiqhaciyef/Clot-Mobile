@@ -36,9 +36,11 @@ import androidx.core.net.toUri
 import coil.compose.rememberImagePainter
 import com.natiqhaciyef.clotmobile.R
 import com.natiqhaciyef.clotmobile.common.helpers.priceConverter
+import com.natiqhaciyef.clotmobile.common.helpers.priceValueConverter
 import com.natiqhaciyef.clotmobile.common.util.classes.CategoryModel
 import com.natiqhaciyef.clotmobile.common.util.objects.DefaultImpl
 import com.natiqhaciyef.clotmobile.data.models.ClothesModel
+import com.natiqhaciyef.clotmobile.domain.models.ClothesMappedModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
 import com.natiqhaciyef.clotmobile.ui.theme.DarkPurple
 
@@ -97,7 +99,7 @@ fun CategoryCard(
 @Preview
 @Composable
 fun ClothesCard(
-    clothesModel: ClothesModel = DefaultImpl.clothesModel
+    clothesModel: ClothesMappedModel = DefaultImpl.clothesModel
 ) {
     Card(
         modifier = Modifier
@@ -132,7 +134,7 @@ fun ClothesCard(
                     .padding(horizontal = 15.dp),
                 text = clothesModel.title,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 17.sp,
+                fontSize = 16.sp,
                 color = Color.Black,
                 )
 
@@ -141,7 +143,7 @@ fun ClothesCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 15.dp),
-                text = "${clothesModel.price} ${priceConverter(clothesModel.priceCurrency)}",
+                text = "${priceValueConverter(clothesModel.price)} ${priceConverter(clothesModel.priceCurrency)}",
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
                 color = Color.Black,

@@ -11,3 +11,12 @@ fun priceConverter(currency: String): String {
         else -> { "Currency not selected" }
     }
 }
+
+
+fun priceValueConverter(price: Double): String{
+    return if (price.toInt().toDouble() == price){
+        "${price.toInt()}"
+    }else{
+        "$price"
+    }
+}

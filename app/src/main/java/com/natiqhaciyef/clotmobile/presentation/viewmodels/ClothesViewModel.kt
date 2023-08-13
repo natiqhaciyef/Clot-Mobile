@@ -8,6 +8,7 @@ import com.natiqhaciyef.clotmobile.data.models.enums.ClothesCategory
 import com.natiqhaciyef.clotmobile.data.models.enums.ClothesSizes
 import com.natiqhaciyef.clotmobile.data.models.enums.PriceCurrencies
 import com.natiqhaciyef.clotmobile.data.models.enums.Seasons
+import com.natiqhaciyef.clotmobile.domain.models.ClothesMappedModel
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.GetAllClothesUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.GetClothesByIdUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.clothes.InsertClothesUseCase
@@ -31,6 +32,25 @@ class ClothesViewModel @Inject constructor(
 
     init {
         getAllClothes()
+//        insertClothes(
+//            ClothesMappedModel(
+//                id = 0,
+//                title = "Foxanger outdoors",
+//                details = "Erkek Siyah Oversize Dawn Baskılı T-shirt",
+//                brand = "Foxanger",
+//                price = 60.0,
+//                priceCurrency = PriceCurrencies.TL.name,
+//                size = listOf(ClothesSizes.S.name,ClothesSizes.M.name),
+//                color = listOf(),
+//                image = "https://cdn.dsmcdn.com/ty520/product/media/images/20220902/2/168370607/557754149/1/1_org_zoom.jpg",
+//                type = "T-Shirt",
+//                category = ClothesCategory.Clothes.name,
+//                cargoPrice = 35.0,
+//                season = listOf(Seasons.Summer.name, Seasons.Spring.name),
+//                country = "Turkey",
+//                isActive = true
+//            )
+//        )
     }
 
     private fun getAllClothes() {
@@ -83,7 +103,7 @@ class ClothesViewModel @Inject constructor(
     }
 
     fun insertClothes(
-        clothesModel: ClothesModel,
+        clothesModel: ClothesMappedModel,
         onSuccess: () -> Unit = { },
         onError: () -> Unit = { },
         onLoading: () -> Unit = { }
@@ -109,7 +129,7 @@ class ClothesViewModel @Inject constructor(
 
 
     fun updateClothes(
-        clothesModel: ClothesModel,
+        clothesModel: ClothesMappedModel,
         onSuccess: () -> Unit = { },
         onError: () -> Unit = { },
         onLoading: () -> Unit = { }
