@@ -103,6 +103,7 @@ fun ClothesCard(
 ) {
     Card(
         modifier = Modifier
+            .padding(top = 7.dp)
             .width(150.dp)
             .height(250.dp)
             .padding(horizontal = 5.dp),
