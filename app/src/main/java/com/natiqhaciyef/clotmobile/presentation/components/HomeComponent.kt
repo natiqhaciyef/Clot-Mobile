@@ -59,9 +59,9 @@ fun CategoryCard(
     Card(
         modifier = Modifier
             .width(90.dp)
-            .height(120.dp),
+            .height(100.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = Color.Transparent
         ),
         shape = RoundedCornerShape(12.dp),
     ) {
@@ -69,7 +69,7 @@ fun CategoryCard(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             Image(
                 modifier = Modifier
                     .size(65.dp)
@@ -89,7 +89,7 @@ fun CategoryCard(
                 color = AppDarkPurple,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(5.dp))
         }
     }
 }

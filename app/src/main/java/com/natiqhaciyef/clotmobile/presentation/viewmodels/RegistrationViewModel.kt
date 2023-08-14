@@ -176,7 +176,7 @@ class RegistrationViewModel @Inject constructor(
     }
 
 
-    private fun getUser(
+    fun getUser(
         email: String,
         onSuccess: (UserModel) -> Unit = { },
         onError: () -> Unit = { },
