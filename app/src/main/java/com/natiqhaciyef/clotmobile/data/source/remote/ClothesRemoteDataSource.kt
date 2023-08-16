@@ -14,10 +14,6 @@ class ClothesRemoteDataSource(
         service.getAllClothes()
     }
 
-    suspend fun getClothesById(id: Int): ClothesModel? = withContext(Dispatchers.IO){
-        service.getClothesById(id)
-    }
-
     suspend fun insertClothes(
         clothesModel: ClothesModel
     ): CRUDResponse = withContext(Dispatchers.IO){

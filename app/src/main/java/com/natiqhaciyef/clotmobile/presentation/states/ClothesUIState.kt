@@ -7,5 +7,4 @@ data class ClothesUIState(
     var list : List<ClothesMappedModel> = listOf(),
     var errorMessage: String? = null,
     var isLoading: Boolean = false,
-    var singleClothes: ClothesMappedModel? = null
 )

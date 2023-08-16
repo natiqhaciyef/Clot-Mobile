@@ -9,8 +9,6 @@ import com.natiqhaciyef.clotmobile.domain.repositories.remote.ClothesRemoteRepos
 class ClothesRemoteRepositoryImpl(private val ds: ClothesRemoteDataSource): ClothesRemoteRepository {
     override suspend fun getAllClothes(): ClothesResult = ds.getAllClothes()
 
-    override suspend fun getClothesById(id: Int): ClothesModel? = ds.getClothesById(id)
-
     override suspend fun insertClothes(clothesModel: ClothesModel): CRUDResponse = ds.insertClothes(clothesModel)
 
     override suspend fun deleteClothes(id: Int): CRUDResponse = ds.deleteClothes(id)

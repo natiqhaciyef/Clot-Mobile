@@ -1,6 +1,5 @@
 package com.natiqhaciyef.clotmobile.data.network.services
 
-import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 import com.natiqhaciyef.clotmobile.data.network.CRUDResponse
 import com.natiqhaciyef.clotmobile.data.network.results.ClothesResult
 import retrofit2.http.Field
@@ -12,9 +11,6 @@ interface ClothesService {
 
     @GET("clothes/get_clothes.php")
     suspend fun getAllClothes(): ClothesResult
-
-    @GET("clothes/search_clothes.php")
-    suspend fun getClothesById(id: Int): ClothesModel?
 
     @POST("clothes/insert_clothes.php")
     @FormUrlEncoded

@@ -6,5 +6,8 @@ enum class PriceCurrencies(val sign: String) {
     EURO ("€"),
     Pound ("£"),
     CAD ("$ CAD"),
-    TL ("TL");
+    TL ("TL"),
+    RUBLE ("₽"),
+    YUAN ("¥"),
+    YEN ("Yen");
 }

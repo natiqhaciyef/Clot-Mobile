@@ -7,4 +7,5 @@ enum class ScreenId {
     ForgotPasswordScreen,
 
     MainScreenLine,
+    ClothesDetailsScreen,
 }

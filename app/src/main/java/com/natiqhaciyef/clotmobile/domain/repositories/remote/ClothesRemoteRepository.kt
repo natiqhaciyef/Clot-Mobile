@@ -8,8 +8,6 @@ interface ClothesRemoteRepository {
 
     suspend fun getAllClothes(): ClothesResult
 
-    suspend fun getClothesById(id: Int): ClothesModel?
-
     suspend fun insertClothes(clothesModel: ClothesModel): CRUDResponse
 
     suspend fun deleteClothes(id: Int): CRUDResponse
