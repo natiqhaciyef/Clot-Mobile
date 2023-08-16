@@ -60,6 +60,7 @@ import com.natiqhaciyef.clotmobile.presentation.components.ClothesCard
 import com.natiqhaciyef.clotmobile.presentation.components.OutlinedInputBox
 import com.natiqhaciyef.clotmobile.presentation.components.categories.Category
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
+import com.natiqhaciyef.clotmobile.presentation.navigation.ScreenId
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.ClothesViewModel
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
@@ -92,7 +93,7 @@ fun HomeScreen(
                     .height(215.dp)
                     .background(AppPurple)
             )
-            ClothesScreen()
+            ClothesScreen(navController = navController)
         }
     }
 
@@ -100,6 +101,7 @@ fun HomeScreen(
 
 @Composable
 fun ClothesScreen(
+    navController: NavController,
     clothesViewModel: ClothesViewModel = hiltViewModel(),
     registrationViewModel: RegistrationViewModel = hiltViewModel()
 ) {
@@ -288,8 +290,10 @@ fun ClothesScreen(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(10.dp)
         ) {
-            items(clothesList.value.list.filter { it.title.contains(searchQuery.value) }) { clothes ->
-                ClothesCard(clothes)
+            items(clothesList.value.list.filter { it.title.lowercase().contains(searchQuery.value.lowercase()) }) { clothes ->
+                ClothesCard(clothes){
+                    navController.navigate("${ScreenId.ClothesDetailsScreen.name}/${clothes.id}")
+                }
             }
         }
     }

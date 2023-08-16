@@ -45,7 +45,6 @@ import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
 import com.natiqhaciyef.clotmobile.ui.theme.DarkPurple
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun CategoryCard(
@@ -99,7 +98,8 @@ fun CategoryCard(
 @Preview
 @Composable
 fun ClothesCard(
-    clothesModel: ClothesMappedModel = DefaultImpl.clothesModel
+    clothesModel: ClothesMappedModel = DefaultImpl.clothesModel,
+    onClick: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
@@ -112,9 +112,12 @@ fun ClothesCard(
             containerColor = Color.White
         ),
         onClick = {
-
+            onClick()
         },
-        border = BorderStroke(1.dp, brush = Brush.verticalGradient(listOf(Color.White, Color.White, AppDarkPurple)))
+        border = BorderStroke(
+            1.dp,
+            brush = Brush.verticalGradient(listOf(Color.White, Color.White, AppDarkPurple))
+        )
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -137,7 +140,7 @@ fun ClothesCard(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
                 color = Color.Black,
-                )
+            )
 
             Spacer(modifier = Modifier.height(5.dp))
             Text(

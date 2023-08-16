@@ -92,6 +92,7 @@ import com.natiqhaciyef.clotmobile.common.util.classes.NavItemModel
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Lobster
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.VideoPlayerViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkBrown
+import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppGray
 import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
@@ -669,7 +670,8 @@ fun CustomDropDownMenu(
     modifier: Modifier,
     list: List<String>,
     selectedOption: MutableState<String>,
-    isEnabled: Boolean = true
+    isEnabled: Boolean = true,
+    extraAction: () -> Unit  = { }
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -677,7 +679,7 @@ fun CustomDropDownMenu(
         modifier = modifier
             .border(
                 1.dp,
-                AppDarkBrown,
+                AppDarkPurple,
                 shape = RoundedCornerShape(10.dp)
             ),
         expanded = expanded,
