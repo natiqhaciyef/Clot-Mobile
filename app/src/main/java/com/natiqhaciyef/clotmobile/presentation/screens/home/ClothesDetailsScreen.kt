@@ -1,6 +1,5 @@
 package com.natiqhaciyef.clotmobile.presentation.screens.home
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,12 +46,9 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.natiqhaciyef.clotmobile.R
 import com.natiqhaciyef.clotmobile.common.helpers.colorConvertHexCode
 import com.natiqhaciyef.clotmobile.common.helpers.priceConverter
 import com.natiqhaciyef.clotmobile.common.helpers.priceValueConverter
-import com.natiqhaciyef.clotmobile.common.util.objects.EnumList
-import com.natiqhaciyef.clotmobile.data.models.ClothesModel
 import com.natiqhaciyef.clotmobile.presentation.components.CustomDropDownMenu
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.ClothesViewModel
@@ -70,7 +65,7 @@ fun ClothesDetailsScreen(
     val clothesUIState = remember { clothesViewModel.clothesUIState }
     val selectedSize = remember { mutableStateOf("") }
     val selectedColor = remember { mutableStateOf("") }
-    val quantity = remember { mutableStateOf(1) }
+    val amount = remember { mutableStateOf(1) }
     val totalCargoPrice = remember { mutableStateOf(0.0) }
 
     val filteredList = clothesUIState.value.list.filter { it.id == id }
@@ -166,7 +161,7 @@ fun ClothesDetailsScreen(
                         modifier = Modifier
                             .padding(start = 15.dp)
                             .align(Alignment.CenterStart),
-                        text = "Quantity",
+                        text = "Amount",
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp,
                         color = AppGray,
@@ -183,8 +178,8 @@ fun ClothesDetailsScreen(
                                 .clip(RoundedCornerShape(topStart = 10.dp, bottomStart = 10.dp))
                                 .background(AppPurple)
                                 .clickable {
-                                    if (quantity.value > 1)
-                                        quantity.value = (quantity.value - 1)
+                                    if (amount.value > 1)
+                                        amount.value = (amount.value - 1)
                                 },
                         ) {
                             Icon(
@@ -201,7 +196,7 @@ fun ClothesDetailsScreen(
                         Text(
                             modifier = Modifier
                                 .width(40.dp),
-                            text = quantity.value.toString(),
+                            text = amount.value.toString(),
                             fontSize = 18.sp,
                             color = Color.Black,
                             fontWeight = FontWeight.Bold,
@@ -216,7 +211,7 @@ fun ClothesDetailsScreen(
                                 .clip(RoundedCornerShape(topEnd = 10.dp, bottomEnd = 10.dp))
                                 .background(AppPurple)
                                 .clickable {
-                                    quantity.value = (quantity.value + 1)
+                                    amount.value = (amount.value + 1)
                                 },
                         ) {
                             Icon(
@@ -259,15 +254,15 @@ fun ClothesDetailsScreen(
                 modifier = Modifier
                     .padding(start = 20.dp)
                     .fillMaxWidth(),
-                text = "Cargo",
+                text = "Shipping & Fees",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            if (quantity.value > 1 && quantity.value * singleClothes.price <= 200) {
-                totalCargoPrice.value = singleClothes.cargoPrice + 0.1 * singleClothes.cargoPrice * quantity.value
+            if (amount.value > 1 && amount.value * singleClothes.price <= 200) {
+                totalCargoPrice.value = singleClothes.cargoPrice + 0.1 * singleClothes.cargoPrice * amount.value
                 Text(
                     modifier = Modifier,
                     text = "${priceValueConverter(totalCargoPrice.value)} ${priceConverter(singleClothes.priceCurrency)} for shipping price",
@@ -277,7 +272,7 @@ fun ClothesDetailsScreen(
                     color = AppGray,
                 )
 
-            } else if (quantity.value > 1 || quantity.value * singleClothes.price > 200) {
+            } else if (amount.value > 1 || amount.value * singleClothes.price > 200) {
                 totalCargoPrice.value = 0.0
                 Text(
                     modifier = Modifier,
@@ -324,7 +319,7 @@ fun ClothesDetailsScreen(
                 ) {
                     Text(
                         modifier = Modifier,
-                        text = "Submit: ${priceValueConverter((singleClothes.price * quantity.value + totalCargoPrice.value))} ${priceConverter(singleClothes.priceCurrency)}",
+                        text = "Submit: ${priceValueConverter((singleClothes.price * amount.value + totalCargoPrice.value))} ${priceConverter(singleClothes.priceCurrency)}",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,

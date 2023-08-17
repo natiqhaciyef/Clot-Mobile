@@ -2,13 +2,16 @@ package com.natiqhaciyef.clotmobile.data.di.modules
 
 import com.natiqhaciyef.clotmobile.data.network.services.ClothesService
 import com.natiqhaciyef.clotmobile.data.network.NetworkURL
+import com.natiqhaciyef.clotmobile.data.network.services.CartService
 import com.natiqhaciyef.clotmobile.data.network.services.CoffeeService
 import com.natiqhaciyef.clotmobile.data.network.services.UserService
 import com.natiqhaciyef.clotmobile.data.network.services.VideoService
+import com.natiqhaciyef.clotmobile.data.source.remote.CartRemoteDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.ClothesRemoteDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.CoffeeRemoteDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.UserRemoteDataSource
 import com.natiqhaciyef.clotmobile.data.source.remote.VideoRemoteDataSource
+import com.natiqhaciyef.clotmobile.domain.repositories.impl.CartRemoteRepositoryImpl
 import com.natiqhaciyef.clotmobile.domain.repositories.remote.ClothesRemoteRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.remote.CoffeeRemoteRepository
 import com.natiqhaciyef.clotmobile.domain.repositories.remote.UserRemoteRepository
@@ -17,6 +20,7 @@ import com.natiqhaciyef.clotmobile.domain.repositories.impl.ClothesRemoteReposit
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.CoffeeRemoteRepositoryImpl
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.UserRemoteRepositoryImpl
 import com.natiqhaciyef.clotmobile.domain.repositories.impl.VideoRemoteRepositoryImpl
+import com.natiqhaciyef.clotmobile.domain.repositories.remote.CartRemoteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,6 +63,10 @@ object RemoteModule {
 
     @Provides
     @Singleton
+    fun provideCartService(network: Retrofit) = network.create(CartService::class.java)
+
+    @Provides
+    @Singleton
     fun provideClothesDataSource(service: ClothesService) = ClothesRemoteDataSource(service)
 
     @Provides
@@ -75,6 +83,10 @@ object RemoteModule {
 
     @Provides
     @Singleton
+    fun provideCartDataSource(service: CartService) = CartRemoteDataSource(service)
+
+    @Provides
+    @Singleton
     fun provideClothesRepository(ds: ClothesRemoteDataSource) = ClothesRemoteRepositoryImpl(ds) as ClothesRemoteRepository
 
     @Provides
@@ -88,5 +100,9 @@ object RemoteModule {
     @Provides
     @Singleton
     fun provideVideoRepository(ds: VideoRemoteDataSource) = VideoRemoteRepositoryImpl(ds) as VideoRemoteRepository
+
+    @Provides
+    @Singleton
+    fun provideCartRepository(ds: CartRemoteDataSource) = CartRemoteRepositoryImpl(ds) as CartRemoteRepository
 
 }
