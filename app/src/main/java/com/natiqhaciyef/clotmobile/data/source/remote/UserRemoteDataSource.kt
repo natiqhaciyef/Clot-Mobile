@@ -9,19 +9,30 @@ class UserRemoteDataSource(
     private val service: UserService
 ) {
 
-    suspend fun getUser(email: String) = withContext(Dispatchers.IO){
-        service.getUser(email)
+    suspend fun getUser() = withContext(Dispatchers.IO) {
+        service.getUser()
     }
 
-    suspend fun insertUser(user: UserModel) = withContext(Dispatchers.IO){
-        service.insertUser(user)
+    suspend fun insertUser(user: UserModel) = withContext(Dispatchers.IO) {
+        service.insertUser(
+            name = user.name,
+            email = user.email,
+            phone = user.phone,
+            password = user.password
+        )
     }
 
-    suspend fun updateUser(user: UserModel) = withContext(Dispatchers.IO){
-        service.updateUser(user)
+    suspend fun updateUser(user: UserModel) = withContext(Dispatchers.IO) {
+        service.updateUser(
+            id = user.id,
+            name = user.name,
+            email = user.email,
+            phone = user.phone,
+            password = user.password
+        )
     }
 
-    suspend fun deleteUser(id: Int) = withContext(Dispatchers.IO){
+    suspend fun deleteUser(id: Int) = withContext(Dispatchers.IO) {
         service.deleteUser(id)
     }
 

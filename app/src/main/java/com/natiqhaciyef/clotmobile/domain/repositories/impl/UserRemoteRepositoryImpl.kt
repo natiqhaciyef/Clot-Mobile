@@ -7,7 +7,7 @@ import com.natiqhaciyef.clotmobile.domain.repositories.remote.UserRemoteReposito
 class UserRemoteRepositoryImpl (
     private val ds: UserRemoteDataSource
 ) : UserRemoteRepository {
-    override suspend fun getUser(email: String) = ds.getUser(email)
+    override suspend fun getUser() = ds.getUser()
 
     override suspend fun insertUser(user: UserModel) = ds.insertUser(user)
 

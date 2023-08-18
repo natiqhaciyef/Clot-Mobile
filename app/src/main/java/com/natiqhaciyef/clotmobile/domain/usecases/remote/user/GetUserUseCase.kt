@@ -13,10 +13,10 @@ class GetUserUseCase @Inject constructor(
     suspend operator fun invoke(email: String) = flow {
         emit(Resource.loading(null))
 
-        val user = userRepo.getUser(email)
-        if (user != null){
-            emit(Resource.success(user))
-        }else{
+        val user = userRepo.getUser()
+        if (user.userTable != null) {
+            emit(Resource.success(user.userTable.filter { it.email == email }))
+        } else {
             emit(Resource.error(BaseUseCase.LOADING_FAIL, null))
         }
     }

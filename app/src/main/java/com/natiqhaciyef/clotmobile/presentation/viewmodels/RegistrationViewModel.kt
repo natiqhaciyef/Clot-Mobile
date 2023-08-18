@@ -186,8 +186,8 @@ class RegistrationViewModel @Inject constructor(
             getUserUseCase.invoke(email).collectLatest { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
-                        if (result.data != null)
-                            onSuccess(result.data)
+                        if (!result.data.isNullOrEmpty())
+                            onSuccess(result.data[0])
                     }
 
                     Status.ERROR -> {

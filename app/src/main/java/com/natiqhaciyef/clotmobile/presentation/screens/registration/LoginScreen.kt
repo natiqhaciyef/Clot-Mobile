@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.natiqhaciyef.clotmobile.R
+import com.natiqhaciyef.clotmobile.data.models.UserModel
+import com.natiqhaciyef.clotmobile.data.models.enums.UserTypes
 import com.natiqhaciyef.clotmobile.presentation.components.InputBox
 import com.natiqhaciyef.clotmobile.presentation.components.PasswordBox
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
@@ -119,7 +121,23 @@ fun LoginScreen(
                 .padding(horizontal = 20.dp)
                 .height(50.dp),
             onClick = {
+                val user = UserModel(
+                    id = 0,
+                    email = email.value,
+                    phone = "",
+                    password = password.value,
+                    name = ""
+                )
+                registrationViewModel.loginUserFromFirebase(
+                    userModel = user,
+                    onSuccess = {
+                        println(it.name)
+                        println(it.id)
+                    },
+                    onError = {
 
+                    }
+                )
             },
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.buttonColors(

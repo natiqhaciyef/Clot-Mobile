@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.natiqhaciyef.clotmobile.R
+import com.natiqhaciyef.clotmobile.data.models.UserModel
+import com.natiqhaciyef.clotmobile.data.models.enums.UserTypes
 import com.natiqhaciyef.clotmobile.presentation.components.InputBox
 import com.natiqhaciyef.clotmobile.presentation.components.PasswordBox
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
@@ -122,7 +124,15 @@ fun RegisterScreen(
                 .padding(horizontal = 20.dp)
                 .height(50.dp),
             onClick = {
-
+                val user = UserModel(
+                    id = 0,
+                    name = name.value,
+                    email = email.value,
+                    phone = phone.value,
+                    password = password.value,
+                    type = UserTypes.User.name
+                )
+                registrationViewModel.registrationFromFirebase(user)
             },
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.buttonColors(

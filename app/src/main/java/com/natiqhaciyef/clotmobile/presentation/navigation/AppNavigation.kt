@@ -17,7 +17,7 @@ import com.natiqhaciyef.clotmobile.presentation.screens.registration.RegisterScr
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = ScreenId.MainScreenLine.name) {
+    NavHost(navController = navController, startDestination = ScreenId.LoginScreen.name) {
 
         composable(route = ScreenId.SplashScreen.name) {
 
