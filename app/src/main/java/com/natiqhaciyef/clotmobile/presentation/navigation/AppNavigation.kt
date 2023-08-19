@@ -12,15 +12,16 @@ import com.natiqhaciyef.clotmobile.presentation.screens.home.MainScreenLine
 import com.natiqhaciyef.clotmobile.presentation.screens.registration.ForgotPasswordScreen
 import com.natiqhaciyef.clotmobile.presentation.screens.registration.LoginScreen
 import com.natiqhaciyef.clotmobile.presentation.screens.registration.RegisterScreen
+import com.natiqhaciyef.clotmobile.presentation.screens.registration.SplashScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = ScreenId.LoginScreen.name) {
+    NavHost(navController = navController, startDestination = ScreenId.SplashScreen.name) {
 
         composable(route = ScreenId.SplashScreen.name) {
-
+            SplashScreen(navController = navController)
         }
 
         composable(route = ScreenId.LoginScreen.name) {
