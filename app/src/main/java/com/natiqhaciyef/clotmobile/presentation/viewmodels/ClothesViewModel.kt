@@ -54,21 +54,20 @@ class ClothesViewModel @Inject constructor(
     private fun getAllClothes() {
         viewModelScope.launch {
             getAllClothesUseCase.invoke().collectLatest { result ->
-                val defaultState = ClothesUIState()
                 when (result.status) {
                     Status.SUCCESS -> {
                         if (result.data != null)
                             clothesUIState.value =
-                                defaultState.copy(list = result.data, isLoading = false)
+                                clothesUIState.value.copy(list = result.data, isLoading = false)
                     }
 
                     Status.ERROR -> {
                         clothesUIState.value =
-                            defaultState.copy(errorMessage = result.message, isLoading = false)
+                            clothesUIState.value.copy(errorMessage = result.message, isLoading = false)
                     }
 
                     Status.LOADING -> {
-                        clothesUIState.value = defaultState.copy(isLoading = true)
+                        clothesUIState.value = clothesUIState.value.copy(isLoading = true)
                     }
                 }
             }

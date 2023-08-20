@@ -12,7 +12,7 @@ class CartRemoteRepositoryImpl(
     private val ds: CartRemoteDataSource
 ): CartRemoteRepository {
 
-    override suspend fun getCarts(userId: Int): CartResult = ds.getCarts(userId)
+    override suspend fun getCarts(): CartResult = ds.getCarts()
 
 
     override suspend fun insertCart(cartModel: CartModel): CRUDResponse = ds.insertCart(cartModel = cartModel)

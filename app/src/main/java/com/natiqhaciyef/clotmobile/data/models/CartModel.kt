@@ -10,8 +10,8 @@ data class CartModel(
     var id: Int = 0,
     @SerializedName("user_id")
     var userId: Int,
-    @SerializedName("title")
-    var title: String,
+    @SerializedName("titles")
+    var titles: String,
     @SerializedName("details")
     var details: String,
     @SerializedName("image")

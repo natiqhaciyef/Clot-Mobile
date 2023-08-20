@@ -11,18 +11,15 @@ import retrofit2.http.POST
 
 interface CartService {
 
-    @POST("carts/search_cart.php")
-    @FormUrlEncoded
-    suspend fun getCarts(
-        @Field("user_id") userId: Int
-    ): CartResult
+    @GET("carts/get_carts.php")
+    suspend fun getCarts(): CartResult
 
-    @POST("clothes/insert_cart.php")
+    @POST("carts/insert_cart.php")
     @FormUrlEncoded
     suspend fun insertCart(
         @Field("id") id: Int = 0,
         @Field("user_id") userId: Int,
-        @Field("title") title: String,
+        @Field("titles") title: String,
         @Field("details") details: String,
         @Field("image") image: String,
         @Field("size") size: String,
@@ -34,12 +31,12 @@ interface CartService {
         @Field("date") date: String,
     ): CRUDResponse
 
-    @POST("clothes/update_cart.php")
+    @POST("carts/update_cart.php")
     @FormUrlEncoded
     suspend fun updateCart(
         @Field("id") id: Int,
         @Field("user_id") userId: Int,
-        @Field("title") title: String,
+        @Field("titles") title: String,
         @Field("details") details: String,
         @Field("image") image: String,
         @Field("size") size: String,
@@ -51,7 +48,7 @@ interface CartService {
         @Field("date") date: String
     ): CRUDResponse
 
-    @POST("clothes/delete_cart.php")
+    @POST("carts/delete_cart.php")
     @FormUrlEncoded
     suspend fun deleteCart(
         @Field("id") id: Int

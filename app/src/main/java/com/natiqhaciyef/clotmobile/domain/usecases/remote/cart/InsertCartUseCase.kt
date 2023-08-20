@@ -19,6 +19,7 @@ class InsertCartUseCase @Inject constructor(
             emit(Resource.success(BaseUseCase.INSERT_SUCCESS))
         }else{
             emit(Resource.error(BaseUseCase.INSERT_FAIL, null))
+            println(response.message)
         }
     }
 

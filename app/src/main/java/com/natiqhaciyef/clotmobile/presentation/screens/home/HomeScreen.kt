@@ -35,6 +35,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -61,6 +62,7 @@ import com.natiqhaciyef.clotmobile.presentation.components.OutlinedInputBox
 import com.natiqhaciyef.clotmobile.presentation.components.categories.Category
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
 import com.natiqhaciyef.clotmobile.presentation.navigation.ScreenId
+import com.natiqhaciyef.clotmobile.presentation.states.ClothesUIState
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.ClothesViewModel
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
@@ -76,7 +78,10 @@ import com.natiqhaciyef.clotmobile.ui.theme.Yellow
 @Composable
 fun HomeScreen(
     navController: NavController,
+    userId: Int,
+    clothesViewModel: ClothesViewModel = hiltViewModel(),
 ) {
+    val clothesList = remember { clothesViewModel.clothesUIState }
 
     Column(
         modifier = Modifier
@@ -84,8 +89,7 @@ fun HomeScreen(
             .background(Color.Transparent)
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             Box(
                 modifier = Modifier
@@ -93,7 +97,11 @@ fun HomeScreen(
                     .height(215.dp)
                     .background(AppPurple)
             )
-            ClothesScreen(navController = navController)
+            ClothesScreen(
+                navController = navController,
+                userId = userId,
+                clothesList = clothesList
+            )
         }
     }
 
@@ -102,24 +110,21 @@ fun HomeScreen(
 @Composable
 fun ClothesScreen(
     navController: NavController,
-    clothesViewModel: ClothesViewModel = hiltViewModel(),
+    userId: Int,
+    clothesList: MutableState<ClothesUIState>,
     registrationViewModel: RegistrationViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val searchQuery = remember { mutableStateOf("") }
-    val clothesList = remember { clothesViewModel.clothesUIState }
     val currentUser = registrationViewModel.firebaseRepo.auth.currentUser
     var user: UserModel? = null
     if (currentUser != null && currentUser.email != null) {
-        registrationViewModel.getUser(
-            currentUser.email!!,
+        registrationViewModel.getUser(currentUser.email!!,
             onSuccess = { u ->
                 user = u
             }, onError = {
                 user = null
-            }
-        )
+            })
     }
 
     Column(
@@ -208,8 +213,7 @@ fun ClothesScreen(
                 )
             },
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Search
+                keyboardType = KeyboardType.Text, imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions {
                 focusManager.moveFocus(FocusDirection.Down)
@@ -254,8 +258,7 @@ fun ClothesScreen(
         }
 
         LazyRow(
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(10.dp)
+            modifier = Modifier.fillMaxWidth(), contentPadding = PaddingValues(10.dp)
         ) {
             items(Category.clothesCategories) { category ->
                 CategoryCard(category)
@@ -290,9 +293,11 @@ fun ClothesScreen(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(10.dp)
         ) {
-            items(clothesList.value.list.filter { it.title.lowercase().contains(searchQuery.value.lowercase()) }) { clothes ->
-                ClothesCard(clothes){
-                    navController.navigate("${ScreenId.ClothesDetailsScreen.name}/${clothes.id}")
+            items(clothesList.value.list.filter {
+                it.title.lowercase().contains(searchQuery.value.lowercase())
+            }) { clothes ->
+                ClothesCard(clothes) {
+                    navController.navigate("${ScreenId.ClothesDetailsScreen.name}/${clothes.id}/${userId}")
                 }
             }
         }

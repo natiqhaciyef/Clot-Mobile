@@ -34,21 +34,20 @@ class CoffeeViewModel @Inject constructor(
     private fun getAllCoffee() {
         viewModelScope.launch {
             getAllCoffeeUseCase.invoke().collectLatest { result ->
-                val defaultState = CoffeeUIState()
                 when (result.status) {
                     Status.SUCCESS -> {
                         if (result.data != null)
                             coffeeUIState.value =
-                                defaultState.copy(list = result.data, isLoading = false)
+                                coffeeUIState.value.copy(list = result.data, isLoading = false)
                     }
 
                     Status.ERROR -> {
                         coffeeUIState.value =
-                            defaultState.copy(errorMessage = result.message, isLoading = false)
+                            coffeeUIState.value.copy(errorMessage = result.message, isLoading = false)
                     }
 
                     Status.LOADING -> {
-                        coffeeUIState.value = defaultState.copy(isLoading = true)
+                        coffeeUIState.value = coffeeUIState.value.copy(isLoading = true)
                     }
                 }
             }

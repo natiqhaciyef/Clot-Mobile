@@ -42,22 +42,35 @@ fun AppNavigation() {
             )
         }
 
-        composable(route = ScreenId.MainScreenLine.name) {
+        composable(
+            route = "${ScreenId.MainScreenLine.name}/{userId}",
+            arguments = listOf(
+                navArgument("userId"){
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            val userId = it.arguments?.getInt("userId") ?: 0
             MainScreenLine(
-                navController = navController
+                navController = navController,
+                userId = userId
             )
         }
 
         composable(
-            route = "${ScreenId.ClothesDetailsScreen.name}/{clothesId}",
+            route = "${ScreenId.ClothesDetailsScreen.name}/{clothesId}/{userId}",
             arguments = listOf(
-                navArgument("clothesId"){
+                navArgument("clothesId") {
+                    type = NavType.IntType
+                },
+                navArgument("userId") {
                     type = NavType.IntType
                 }
             )
         ) {
             val id = it.arguments?.getInt("clothesId") ?: 0
-            ClothesDetailsScreen(navController = navController, id = id)
+            val userId = it.arguments?.getInt("userId") ?: 0
+            ClothesDetailsScreen(navController = navController, id = id, userId = userId)
         }
     }
 }

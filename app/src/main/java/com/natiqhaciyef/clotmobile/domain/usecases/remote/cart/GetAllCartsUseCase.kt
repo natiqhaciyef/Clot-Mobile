@@ -10,14 +10,17 @@ class GetAllCartsUseCase @Inject constructor(
     private val cartsRemoteRepository: CartRemoteRepository
 ) {
 
-    suspend operator fun invoke(userId: Int) = flow {
+    suspend operator fun invoke() = flow {
         emit(Resource.loading(null))
 
-        val response = cartsRemoteRepository.getCarts(userId)
-        if (response.cartTable != null)
+        val response = cartsRemoteRepository.getCarts()
+        if (response.cartTable != null) {
             emit(Resource.success(response.cartTable))
-        else
+//            println("success")
+        }else {
             emit(Resource.error(BaseUseCase.LOADING_FAIL, null))
+//            println("error")
+        }
     }
 
 }

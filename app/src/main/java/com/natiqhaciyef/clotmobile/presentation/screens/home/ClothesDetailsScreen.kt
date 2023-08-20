@@ -49,19 +49,26 @@ import coil.compose.rememberImagePainter
 import com.natiqhaciyef.clotmobile.common.helpers.colorConvertHexCode
 import com.natiqhaciyef.clotmobile.common.helpers.priceConverter
 import com.natiqhaciyef.clotmobile.common.helpers.priceValueConverter
+import com.natiqhaciyef.clotmobile.common.helpers.toSQLiteString
+import com.natiqhaciyef.clotmobile.data.models.CartModel
 import com.natiqhaciyef.clotmobile.presentation.components.CustomDropDownMenu
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
+import com.natiqhaciyef.clotmobile.presentation.viewmodels.CartViewModel
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.ClothesViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppGray
 import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
+import java.util.Calendar
 
 @Composable
 fun ClothesDetailsScreen(
     navController: NavController,
     id: Int,
-    clothesViewModel: ClothesViewModel = hiltViewModel()
+    userId: Int,
+    clothesViewModel: ClothesViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel()
 ) {
+    val cartUIState = remember { cartViewModel.cartUIState }
     val clothesUIState = remember { clothesViewModel.clothesUIState }
     val selectedSize = remember { mutableStateOf("") }
     val selectedColor = remember { mutableStateOf("") }
@@ -262,10 +269,15 @@ fun ClothesDetailsScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             if (amount.value > 1 && amount.value * singleClothes.price <= 200) {
-                totalCargoPrice.value = singleClothes.cargoPrice + 0.1 * singleClothes.cargoPrice * amount.value
+                totalCargoPrice.value =
+                    singleClothes.cargoPrice + 0.1 * singleClothes.cargoPrice * amount.value
                 Text(
                     modifier = Modifier,
-                    text = "${priceValueConverter(totalCargoPrice.value)} ${priceConverter(singleClothes.priceCurrency)} for shipping price",
+                    text = "${priceValueConverter(totalCargoPrice.value)} ${
+                        priceConverter(
+                            singleClothes.priceCurrency
+                        )
+                    } for shipping price",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontStyle = FontStyle.Italic,
@@ -287,7 +299,11 @@ fun ClothesDetailsScreen(
 
                 Text(
                     modifier = Modifier,
-                    text = "${priceValueConverter(totalCargoPrice.value)} ${priceConverter(singleClothes.priceCurrency)}  for shipping price",
+                    text = "${priceValueConverter(totalCargoPrice.value)} ${
+                        priceConverter(
+                            singleClothes.priceCurrency
+                        )
+                    }  for shipping price",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontStyle = FontStyle.Italic,
@@ -303,6 +319,22 @@ fun ClothesDetailsScreen(
                     .height(55.dp),
                 onClick = {
 //                          navController.navigate()
+                    val cartModel = CartModel(
+                        id = 0,
+                        userId = userId,
+                        titles = singleClothes.title,
+                        details = singleClothes.details,
+                        size = singleClothes.size.toMutableList().toSQLiteString(),
+                        image = singleClothes.image,
+                        totalPrice = totalCargoPrice.value + (amount.value * singleClothes.price),
+                        priceCurrency = singleClothes.priceCurrency,
+                        totalCargoPrice = totalCargoPrice.value,
+                        type = singleClothes.type,
+                        amount = amount.value,
+                        date = "${Calendar.getInstance()}"
+                    )
+                    cartViewModel.insertCart(
+                        cartModel = cartModel)
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = AppPurple,
@@ -319,7 +351,11 @@ fun ClothesDetailsScreen(
                 ) {
                     Text(
                         modifier = Modifier,
-                        text = "Submit: ${priceValueConverter((singleClothes.price * amount.value + totalCargoPrice.value))} ${priceConverter(singleClothes.priceCurrency)}",
+                        text = "Submit: ${priceValueConverter((singleClothes.price * amount.value + totalCargoPrice.value))} ${
+                            priceConverter(
+                                singleClothes.priceCurrency
+                            )
+                        }",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,

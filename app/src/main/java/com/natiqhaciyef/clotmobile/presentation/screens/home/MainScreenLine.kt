@@ -26,6 +26,7 @@ import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
 @Composable
 fun MainScreenLine(
     navController: NavController,
+    userId: Int,
     selectedIndex: MutableState<Int> = BottomNavigationIndex.bottomNavigationIndex,
     registrationViewModel: RegistrationViewModel = hiltViewModel(),
 ) {
@@ -67,7 +68,7 @@ fun MainScreenLine(
         it.calculateBottomPadding()
         when (selectedIndex.value) {
             0 -> {
-                HomeScreen(navController)
+                HomeScreen(navController, userId)
             }
 
             1 -> {

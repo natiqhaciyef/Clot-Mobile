@@ -32,21 +32,20 @@ class VideoViewModel @Inject constructor(
     private fun getAllVideo() {
         viewModelScope.launch {
             getVideosUseCase.invoke().collectLatest { result ->
-                val defaultState = VideoUIState()
                 when (result.status) {
                     Status.SUCCESS -> {
                         if (result.data != null)
                             videoUIState.value =
-                                defaultState.copy(list = result.data, isLoading = false)
+                                videoUIState.value.copy(list = result.data, isLoading = false)
                     }
 
                     Status.ERROR -> {
                         videoUIState.value =
-                            defaultState.copy(errorMessage = result.message, isLoading = false)
+                            videoUIState.value.copy(errorMessage = result.message, isLoading = false)
                     }
 
                     Status.LOADING -> {
-                        videoUIState.value = defaultState.copy(isLoading = true)
+                        videoUIState.value = videoUIState.value.copy(isLoading = true)
                     }
                 }
             }

@@ -18,8 +18,9 @@ fun SplashScreen(
         currentUser.email?.let { email ->
             registrationViewModel.getUser(
                 email = email,
-                onSuccess = {
-                    navController.navigate(ScreenId.MainScreenLine.name)
+                onSuccess = { user ->
+                    val userId = user.id
+                    navController.navigate("${ScreenId.MainScreenLine.name}/$userId")
                 },
                 onError = {
                     navController.navigate(ScreenId.LoginScreen.name)
@@ -27,6 +28,7 @@ fun SplashScreen(
             )
         }
     }
+    navController.navigate(ScreenId.LoginScreen.name)
     Column {
 
     }

@@ -6,21 +6,20 @@ import com.natiqhaciyef.clotmobile.data.network.results.CartResult
 import com.natiqhaciyef.clotmobile.data.network.services.CartService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.http.POST
 
 class CartRemoteDataSource(
     private val service: CartService
 ) {
 
-    suspend fun getCarts(userId: Int): CartResult = withContext(Dispatchers.IO){
-        service.getCarts(userId)
+    suspend fun getCarts(): CartResult = withContext(Dispatchers.IO){
+        service.getCarts()
     }
 
     suspend fun insertCart(cartModel: CartModel): CRUDResponse = withContext(Dispatchers.IO){
         service.insertCart(
             id = cartModel.id,
             userId = cartModel.userId,
-            title = cartModel.title,
+            title = cartModel.titles,
             details = cartModel.details,
             image = cartModel.image,
             size = cartModel.size,
@@ -37,7 +36,7 @@ class CartRemoteDataSource(
         service.updateCart(
             id = cartModel.id,
             userId = cartModel.userId,
-            title = cartModel.title,
+            title = cartModel.titles,
             details = cartModel.details,
             image = cartModel.image,
             size = cartModel.size,

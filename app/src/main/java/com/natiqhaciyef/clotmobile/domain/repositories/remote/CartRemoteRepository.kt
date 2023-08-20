@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 interface CartRemoteRepository {
 
-    suspend fun getCarts(userId: Int): CartResult
+    suspend fun getCarts(): CartResult
 
     suspend fun insertCart(cartModel: CartModel): CRUDResponse
 

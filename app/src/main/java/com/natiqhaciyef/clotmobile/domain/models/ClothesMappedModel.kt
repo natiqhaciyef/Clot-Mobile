@@ -2,7 +2,7 @@ package com.natiqhaciyef.clotmobile.domain.models
 
 import com.google.gson.annotations.SerializedName
 
-class ClothesMappedModel(
+data class ClothesMappedModel(
     var id: Int,
     var title: String,
     var details: String,
