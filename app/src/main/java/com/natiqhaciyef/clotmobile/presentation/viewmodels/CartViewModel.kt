@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.natiqhaciyef.clotmobile.common.Status
 import com.natiqhaciyef.clotmobile.data.models.CartModel
+import com.natiqhaciyef.clotmobile.domain.models.CartMappedModel
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.cart.GetAllCartsUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.cart.InsertCartUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.cart.RemoveCartUseCase
@@ -20,17 +21,17 @@ class CartViewModel @Inject constructor(
     private val insertCartUseCase: InsertCartUseCase,
     private val updateCartUseCase: UpdateCartUseCase,
     private val removeCartUseCase: RemoveCartUseCase
-): BaseViewModel() {
+) : BaseViewModel() {
     val cartUIState = mutableStateOf(CartUIState())
 
     init {
         getCarts()
     }
 
-    private fun getCarts(){
+    private fun getCarts() {
         viewModelScope.launch {
             getAllCartsUseCase.invoke().collectLatest { result ->
-                when(result.status){
+                when (result.status) {
                     Status.SUCCESS -> {
                         if (result.data != null)
                             cartUIState.value = cartUIState.value.copy(list = result.data)
@@ -51,42 +52,34 @@ class CartViewModel @Inject constructor(
     }
 
     fun insertCart(
-        cartModel: CartModel,
+        cartModel: CartMappedModel,
         onSuccess: () -> Unit = { },
         onError: () -> Unit = { },
         onLoading: () -> Unit = { }
     ) {
         viewModelScope.launch {
-            if (cartUIState.value.list.any { it.userId == cartModel.userId }) {
-                onError()
-                println("Data not sent")
-            }else{
-                insertCartUseCase.invoke(cartModel).collectLatest { result ->
-                    when (result.status) {
-                        Status.SUCCESS -> {
-                            onSuccess()
-                            println("Data sent")
-                        }
+            insertCartUseCase.invoke(cartModel).collectLatest { result ->
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        onSuccess()
+                        println("Data sent")
+                    }
 
-                        Status.ERROR -> {
-                            onError()
-                        }
+                    Status.ERROR -> {
+                        onError()
+                    }
 
-                        Status.LOADING -> {
-                            onLoading()
-                        }
+                    Status.LOADING -> {
+                        onLoading()
                     }
                 }
             }
-
-//            println(cartUIState.value.list.any{ it.userId == cartModel.userId})
-//            println(cartUIState.value.list)
         }
     }
 
 
     fun updateCart(
-        cartModel: CartModel,
+        cartModel: CartMappedModel,
         onSuccess: () -> Unit = { },
         onError: () -> Unit = { },
         onLoading: () -> Unit = { }

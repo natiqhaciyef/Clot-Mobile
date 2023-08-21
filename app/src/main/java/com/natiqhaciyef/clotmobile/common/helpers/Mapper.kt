@@ -1,6 +1,8 @@
 package com.natiqhaciyef.clotmobile.common.helpers
 
+import com.natiqhaciyef.clotmobile.data.models.CartModel
 import com.natiqhaciyef.clotmobile.data.models.ClothesModel
+import com.natiqhaciyef.clotmobile.domain.models.CartMappedModel
 import com.natiqhaciyef.clotmobile.domain.models.ClothesMappedModel
 
 object Mapper {
@@ -24,7 +26,6 @@ object Mapper {
         )
     }
 
-
     fun mapToClothesModel(clothesMappedModel: ClothesMappedModel): ClothesModel{
         return ClothesModel(
             id = clothesMappedModel.id,
@@ -42,6 +43,40 @@ object Mapper {
             season = clothesMappedModel.season.toMutableList().toSQLiteString(),
             country = clothesMappedModel.country,
             isActive = if (clothesMappedModel.isActive) 1 else 0
+        )
+    }
+
+    fun mapToCartMappedModel(cartModel: CartModel): CartMappedModel{
+        return CartMappedModel(
+            id = cartModel.id,
+            userId = cartModel.userId,
+            titles = cartModel.titles,
+            details = cartModel.details,
+            image = cartModel.image,
+            size = cartModel.size.toSQLiteMutableList(),
+            totalCargoPrice = cartModel.totalCargoPrice,
+            totalPrice = cartModel.totalPrice,
+            priceCurrency = cartModel.priceCurrency,
+            type = cartModel.type,
+            amount = cartModel.amount,
+            date = stringToFormattedDate(cartModel.date)
+        )
+    }
+
+    fun mapToCartModel(cartMappedModel: CartMappedModel): CartModel{
+        return CartModel(
+            id = cartMappedModel.id,
+            userId = cartMappedModel.userId,
+            titles = cartMappedModel.titles,
+            details = cartMappedModel.details,
+            image = cartMappedModel.image,
+            size = cartMappedModel.size.toMutableList().toSQLiteString(),
+            totalCargoPrice = cartMappedModel.totalCargoPrice,
+            totalPrice = cartMappedModel.totalPrice,
+            priceCurrency = cartMappedModel.priceCurrency,
+            type = cartMappedModel.type,
+            amount = cartMappedModel.amount,
+            date = dateToFormattedLocalTime(cartMappedModel.date)
         )
     }
 }

@@ -68,7 +68,7 @@ fun MainScreenLine(
         it.calculateBottomPadding()
         when (selectedIndex.value) {
             0 -> {
-                HomeScreen(navController, userId)
+                HomeScreen(navController = navController, userId = userId)
             }
 
             1 -> {
@@ -76,7 +76,7 @@ fun MainScreenLine(
             }
 
             2 -> {
-                // Cart screen
+                CartScreen(navController = navController, userId = userId)
             }
 
             3 -> {

@@ -1,6 +1,9 @@
 package com.natiqhaciyef.clotmobile.common.helpers
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
@@ -15,7 +18,7 @@ fun splitterTimeDate(formattedDate: String): Map<String, String> {
     return map
 }
 
-fun dateToLocalTime(formattedDate: String): String {
+fun dateConverter(formattedDate: String): String {
     val dayIndex = fromDateToDay(formattedDate)
     val day = formattedDate.substring(dayIndex until 2)
     val month = fromDateToMonth(formattedDate.substring(3 until 5))
@@ -86,7 +89,14 @@ fun fromDoubleToTimeLine(d: Double = 7.5): String {
     return "$hours saat\n$minutes dəqiqə"
 }
 
-fun formattedDate(dateTime: Date = Calendar.getInstance().time): String {
-    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
+fun dateToFormattedLocalTime(dateTime: LocalDateTime = LocalDateTime.now()): String {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
     return formatter.format(dateTime)
+}
+
+fun stringToFormattedDate(dateString: String): LocalDateTime{
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+    val date = LocalDateTime.parse(dateString, formatter)
+
+    return date
 }

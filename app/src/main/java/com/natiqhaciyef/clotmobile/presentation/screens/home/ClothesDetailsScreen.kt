@@ -51,6 +51,7 @@ import com.natiqhaciyef.clotmobile.common.helpers.priceConverter
 import com.natiqhaciyef.clotmobile.common.helpers.priceValueConverter
 import com.natiqhaciyef.clotmobile.common.helpers.toSQLiteString
 import com.natiqhaciyef.clotmobile.data.models.CartModel
+import com.natiqhaciyef.clotmobile.domain.models.CartMappedModel
 import com.natiqhaciyef.clotmobile.presentation.components.CustomDropDownMenu
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.CartViewModel
@@ -58,6 +59,7 @@ import com.natiqhaciyef.clotmobile.presentation.viewmodels.ClothesViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppGray
 import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
+import java.time.LocalDateTime
 import java.util.Calendar
 
 @Composable
@@ -68,7 +70,6 @@ fun ClothesDetailsScreen(
     clothesViewModel: ClothesViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel()
 ) {
-    val cartUIState = remember { cartViewModel.cartUIState }
     val clothesUIState = remember { clothesViewModel.clothesUIState }
     val selectedSize = remember { mutableStateOf("") }
     val selectedColor = remember { mutableStateOf("") }
@@ -319,22 +320,22 @@ fun ClothesDetailsScreen(
                     .height(55.dp),
                 onClick = {
 //                          navController.navigate()
-                    val cartModel = CartModel(
+                    val cartModel = CartMappedModel(
                         id = 0,
                         userId = userId,
                         titles = singleClothes.title,
                         details = singleClothes.details,
-                        size = singleClothes.size.toMutableList().toSQLiteString(),
+                        size = singleClothes.size,
                         image = singleClothes.image,
                         totalPrice = totalCargoPrice.value + (amount.value * singleClothes.price),
                         priceCurrency = singleClothes.priceCurrency,
                         totalCargoPrice = totalCargoPrice.value,
                         type = singleClothes.type,
                         amount = amount.value,
-                        date = "${Calendar.getInstance()}"
+                        date = LocalDateTime.now()
                     )
-                    cartViewModel.insertCart(
-                        cartModel = cartModel)
+
+                    cartViewModel.insertCart(cartModel = cartModel)
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = AppPurple,
@@ -351,11 +352,7 @@ fun ClothesDetailsScreen(
                 ) {
                     Text(
                         modifier = Modifier,
-                        text = "Submit: ${priceValueConverter((singleClothes.price * amount.value + totalCargoPrice.value))} ${
-                            priceConverter(
-                                singleClothes.priceCurrency
-                            )
-                        }",
+                        text = "Submit: ${priceValueConverter((singleClothes.price * amount.value + totalCargoPrice.value))} ${priceConverter(singleClothes.priceCurrency)}",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
