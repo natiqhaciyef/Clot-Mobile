@@ -18,9 +18,13 @@ class GetAllCartsUseCase @Inject constructor(
         val response = cartsRemoteRepository.getCarts()
         if (response.cartTable != null) {
             val list = mutableListOf<CartMappedModel>()
-            response.cartTable!!.forEach { list.add(Mapper.mapToCartMappedModel(it)) }
+            response.cartTable?.let {
+                it.forEach { cart ->
+                    list.add(Mapper.mapToCartMappedModel(cart))
+                }
+            }
             emit(Resource.success(list))
-        }else {
+        } else {
             emit(Resource.error(BaseUseCase.LOADING_FAIL, null))
         }
     }

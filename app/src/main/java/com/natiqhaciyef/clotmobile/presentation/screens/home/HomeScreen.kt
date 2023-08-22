@@ -81,6 +81,7 @@ fun HomeScreen(
     userId: Int,
     clothesViewModel: ClothesViewModel = hiltViewModel(),
 ) {
+    clothesViewModel.getAllClothes()
     val clothesList = remember { clothesViewModel.clothesUIState }
 
     Column(

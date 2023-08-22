@@ -51,7 +51,7 @@ class ClothesViewModel @Inject constructor(
 //        )
     }
 
-    private fun getAllClothes() {
+    fun getAllClothes() {
         viewModelScope.launch {
             getAllClothesUseCase.invoke().collectLatest { result ->
                 when (result.status) {

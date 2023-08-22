@@ -28,7 +28,7 @@ class CartViewModel @Inject constructor(
         getCarts()
     }
 
-    private fun getCarts() {
+    fun getCarts() {
         viewModelScope.launch {
             getAllCartsUseCase.invoke().collectLatest { result ->
                 when (result.status) {

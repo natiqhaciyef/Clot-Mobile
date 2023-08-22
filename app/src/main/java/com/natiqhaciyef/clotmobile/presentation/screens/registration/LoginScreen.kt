@@ -131,8 +131,7 @@ fun LoginScreen(
                 registrationViewModel.loginUserFromFirebase(
                     userModel = user,
                     onSuccess = {
-                        println(it.name)
-                        println(it.id)
+                        navController.navigate("${ScreenId.MainScreenLine.name}/${it.id}")
                     },
                     onError = {
 
