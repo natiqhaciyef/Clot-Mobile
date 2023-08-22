@@ -21,6 +21,7 @@ class UpdateCartUseCase @Inject constructor(
             emit(Resource.success(BaseUseCase.UPDATE_SUCCESS))
         }else{
             emit(Resource.error(BaseUseCase.UPDATE_FAIL, null))
+            println(response.message)
         }
     }
 

@@ -3,7 +3,6 @@ package com.natiqhaciyef.clotmobile.presentation.viewmodels
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.natiqhaciyef.clotmobile.common.Status
-import com.natiqhaciyef.clotmobile.data.models.CartModel
 import com.natiqhaciyef.clotmobile.domain.models.CartMappedModel
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.cart.GetAllCartsUseCase
 import com.natiqhaciyef.clotmobile.domain.usecases.remote.cart.InsertCartUseCase
@@ -13,6 +12,7 @@ import com.natiqhaciyef.clotmobile.presentation.states.CartUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,19 +58,59 @@ class CartViewModel @Inject constructor(
         onLoading: () -> Unit = { }
     ) {
         viewModelScope.launch {
-            insertCartUseCase.invoke(cartModel).collectLatest { result ->
-                when (result.status) {
-                    Status.SUCCESS -> {
-                        onSuccess()
-                        println("Data sent")
-                    }
+            if (cartUIState.value.list.any { it.title == cartModel.title }) {
+                val cartList = cartUIState.value.list.filter { it.title == cartModel.title }
+                if (cartList.isNotEmpty()) {
+                    val emptyCart = cartList[0]
+                    val sizes = emptyCart.size.toMutableList()
+                    sizes.addAll(cartModel.size)
 
-                    Status.ERROR -> {
-                        onError()
-                    }
+                    val colors = emptyCart.colors.toMutableList()
+                    colors.addAll(cartModel.colors)
 
-                    Status.LOADING -> {
-                        onLoading()
+
+                    val totalPrice = cartModel.totalPrice + emptyCart.totalPrice
+                    val updatedCart = CartMappedModel(
+                        id = emptyCart.id,
+                        userId = cartModel.userId,
+                        title = cartModel.title,
+                        details = cartModel.details,
+                        image = cartModel.image,
+                        size = sizes,
+                        colors = colors,
+                        totalPrice = totalPrice,
+                        priceCurrency = cartModel.priceCurrency,
+                        totalCargoPrice = if (totalPrice > 200) 0.0 else (cartModel.totalCargoPrice + emptyCart.totalCargoPrice),
+                        type = cartModel.type,
+                        amount = cartModel.amount + emptyCart.amount,
+                        date = LocalDateTime.now()
+                    )
+                    updateCart(
+                        cartModel = updatedCart,
+                        onSuccess = {
+                            onSuccess()
+                        }, onError = {
+                            onError()
+                        }, onLoading = {
+                            onLoading()
+                        }
+                    )
+                }
+            } else {
+                insertCartUseCase.invoke(cartModel).collectLatest { result ->
+                    when (result.status) {
+                        Status.SUCCESS -> {
+                            onSuccess()
+                            println("Data sent")
+                        }
+
+                        Status.ERROR -> {
+                            onError()
+                        }
+
+                        Status.LOADING -> {
+                            onLoading()
+                        }
                     }
                 }
             }

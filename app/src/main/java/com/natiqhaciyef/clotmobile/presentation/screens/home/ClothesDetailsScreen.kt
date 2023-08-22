@@ -49,8 +49,6 @@ import coil.compose.rememberImagePainter
 import com.natiqhaciyef.clotmobile.common.helpers.colorConvertHexCode
 import com.natiqhaciyef.clotmobile.common.helpers.priceConverter
 import com.natiqhaciyef.clotmobile.common.helpers.priceValueConverter
-import com.natiqhaciyef.clotmobile.common.helpers.toSQLiteString
-import com.natiqhaciyef.clotmobile.data.models.CartModel
 import com.natiqhaciyef.clotmobile.domain.models.CartMappedModel
 import com.natiqhaciyef.clotmobile.presentation.components.CustomDropDownMenu
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
@@ -60,7 +58,6 @@ import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppGray
 import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
 import java.time.LocalDateTime
-import java.util.Calendar
 
 @Composable
 fun ClothesDetailsScreen(
@@ -70,6 +67,7 @@ fun ClothesDetailsScreen(
     clothesViewModel: ClothesViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel()
 ) {
+    cartViewModel.getCarts()
     val clothesUIState = remember { clothesViewModel.clothesUIState }
     val selectedSize = remember { mutableStateOf("") }
     val selectedColor = remember { mutableStateOf("") }
@@ -323,9 +321,10 @@ fun ClothesDetailsScreen(
                     val cartModel = CartMappedModel(
                         id = 0,
                         userId = userId,
-                        titles = singleClothes.title,
+                        title = singleClothes.title,
                         details = singleClothes.details,
-                        size = singleClothes.size,
+                        size = listOf(selectedSize.value),
+                        colors = listOf(selectedColor.value),
                         image = singleClothes.image,
                         totalPrice = totalCargoPrice.value + (amount.value * singleClothes.price),
                         priceCurrency = singleClothes.priceCurrency,
@@ -357,8 +356,6 @@ fun ClothesDetailsScreen(
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                     )
-
-
                 }
             }
 

@@ -10,14 +10,16 @@ data class CartModel(
     var id: Int = 0,
     @SerializedName("user_id")
     var userId: Int,
-    @SerializedName("titles")
-    var titles: String,
+    @SerializedName("title")
+    var title: String,
     @SerializedName("details")
     var details: String,
     @SerializedName("image")
     var image: String,
     @SerializedName("size")
     var size: String,
+    @SerializedName("colors")
+    var colors: String,
     @SerializedName("total_price")
     var totalPrice: Double,
     @SerializedName("price_currency")
