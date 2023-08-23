@@ -1,5 +1,8 @@
 package com.natiqhaciyef.clotmobile.presentation.screens.home
 
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
@@ -36,11 +39,14 @@ import androidx.compose.material.swipeable
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -57,6 +63,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.natiqhaciyef.clotmobile.common.helpers.priceConverter
 import com.natiqhaciyef.clotmobile.common.helpers.priceValueConverter
+import com.natiqhaciyef.clotmobile.common.helpers.totalPriceValueConverter
 import com.natiqhaciyef.clotmobile.domain.models.CartMappedModel
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.CartViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightPurple
@@ -76,16 +83,26 @@ fun CartScreen(
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp
+    val colorAlpha = remember { mutableStateOf(1f) }
 
     val swipeableState = rememberSwipeableState(0)
     val sizePx = with(LocalDensity.current) { (screenWidth - 80).dp.toPx() }
     val anchors = mapOf(0f to 0, sizePx to 1)
 
+    if (swipeableState.offset.value.roundToInt() * 0.001 > 0)
+        colorAlpha.value = (1 - swipeableState.offset.value.roundToInt() * 0.001).toFloat()
+
     if (cartUIState.value.list.isNotEmpty()) {
         val filteredList = cartUIState.value.list.filter { it.userId == userId }
         var totalPrice = 0.0
 
-        filteredList.forEach { totalPrice += it.totalPrice }
+        filteredList.forEach {
+            totalPrice += totalPriceValueConverter(
+                it.totalPrice,
+                it.priceCurrency,
+                "USD"
+            )
+        }
         Box(modifier = Modifier.fillMaxSize()) {
 
             Column(
@@ -143,51 +160,53 @@ fun CartScreen(
                     )
                     .background(
                         shape = CircleShape,
-                        color = AppPurple
+                        color =
+                            Color(color = 0xff9747FF).copy(alpha = colorAlpha.value)
                     )
             ) {
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    text = "Submit: ${priceValueConverter(totalPrice)}",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                )
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .alpha((1 - swipeableState.offset.value.roundToInt() * 0.002).toFloat()),
+                text = "${priceValueConverter(totalPrice)} ${priceConverter("USD")} submit by swiping",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .swipeable(
+                        state = swipeableState,
+                        anchors = anchors,
+                        thresholds = { _, _ -> FractionalThreshold(0.95f) },
+                        orientation = Orientation.Horizontal
+                    )
+                    .offset { IntOffset(swipeableState.offset.value.roundToInt(), 0) },
+            ) {
 
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .swipeable(
-                            state = swipeableState,
-                            anchors = anchors,
-                            thresholds = { _, _ -> FractionalThreshold(0.95f) },
-                            orientation = Orientation.Horizontal
-                        )
-                        .offset { IntOffset(swipeableState.offset.value.roundToInt(), 0) },
+                        .fillMaxHeight()
+                        .width(60.dp)
+                        .padding(5.dp)
+                        .align(Alignment.CenterStart)
+                        .background(Color.White, shape = CircleShape)
+                        .clip(shape = CircleShape)
                 ) {
-
-                    Box(
+                    Icon(
                         modifier = Modifier
-                            .fillMaxHeight()
-                            .width(60.dp)
-                            .padding(5.dp)
-                            .align(Alignment.CenterStart)
-                            .background(Color.White, shape = CircleShape)
-                            .clip(shape = CircleShape)
-                    ) {
-                        Icon(
-                            modifier = Modifier
-                                .size(30.dp)
-                                .align(Alignment.Center),
-                            imageVector = Icons.Outlined.KeyboardDoubleArrowRight,
-                            contentDescription = "Icon",
-                            tint = AppYellow
-                        )
-                    }
+                            .size(30.dp)
+                            .align(Alignment.Center),
+                        imageVector = Icons.Outlined.KeyboardDoubleArrowRight,
+                        contentDescription = "Icon",
+                        tint = AppYellow
+                    )
                 }
-
             }
+
+        }
         }
     }
 }
