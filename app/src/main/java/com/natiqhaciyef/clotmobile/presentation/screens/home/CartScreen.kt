@@ -65,6 +65,7 @@ import com.natiqhaciyef.clotmobile.common.helpers.priceConverter
 import com.natiqhaciyef.clotmobile.common.helpers.priceValueConverter
 import com.natiqhaciyef.clotmobile.common.helpers.totalPriceValueConverter
 import com.natiqhaciyef.clotmobile.domain.models.CartMappedModel
+import com.natiqhaciyef.clotmobile.presentation.navigation.ScreenId
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.CartViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
@@ -80,6 +81,7 @@ fun CartScreen(
 ) {
     cartViewModel.getCarts()
     val cartUIState = remember { cartViewModel.cartUIState }
+    val currentState = remember { mutableStateOf(true) }
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp
@@ -91,6 +93,11 @@ fun CartScreen(
 
     if (swipeableState.offset.value.roundToInt() * 0.001 > 0)
         colorAlpha.value = (1 - swipeableState.offset.value.roundToInt() * 0.001).toFloat()
+
+    if (swipeableState.offset.value.roundToInt() > 800 && currentState.value) {
+//        navController.navigate(ScreenId.ForgotPasswordScreen.name)
+        currentState.value = false
+    }
 
     if (cartUIState.value.list.isNotEmpty()) {
         val filteredList = cartUIState.value.list.filter { it.userId == userId }
@@ -161,52 +168,51 @@ fun CartScreen(
                     .background(
                         shape = CircleShape,
                         color =
-                            Color(color = 0xff9747FF).copy(alpha = colorAlpha.value)
+                        Color(color = 0xff9747FF).copy(alpha = colorAlpha.value)
                     )
             ) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .alpha((1 - swipeableState.offset.value.roundToInt() * 0.002).toFloat()),
-                text = "${priceValueConverter(totalPrice)} ${priceConverter("USD")} submit by swiping",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .swipeable(
-                        state = swipeableState,
-                        anchors = anchors,
-                        thresholds = { _, _ -> FractionalThreshold(0.95f) },
-                        orientation = Orientation.Horizontal
-                    )
-                    .offset { IntOffset(swipeableState.offset.value.roundToInt(), 0) },
-            ) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .alpha((1 - swipeableState.offset.value.roundToInt() * 0.002).toFloat()),
+                    text = "${priceValueConverter(totalPrice)} ${priceConverter("USD")} submit by swiping",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                )
 
                 Box(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .width(60.dp)
-                        .padding(5.dp)
-                        .align(Alignment.CenterStart)
-                        .background(Color.White, shape = CircleShape)
-                        .clip(shape = CircleShape)
+                        .fillMaxSize()
+                        .swipeable(
+                            state = swipeableState,
+                            anchors = anchors,
+                            thresholds = { _, _ -> FractionalThreshold(0.95f) },
+                            orientation = Orientation.Horizontal
+                        )
+                        .offset { IntOffset(swipeableState.offset.value.roundToInt(), 0) },
                 ) {
-                    Icon(
+
+                    Box(
                         modifier = Modifier
-                            .size(30.dp)
-                            .align(Alignment.Center),
-                        imageVector = Icons.Outlined.KeyboardDoubleArrowRight,
-                        contentDescription = "Icon",
-                        tint = AppYellow
-                    )
+                            .fillMaxHeight()
+                            .width(60.dp)
+                            .padding(5.dp)
+                            .align(Alignment.CenterStart)
+                            .background(Color.White, shape = CircleShape)
+                            .clip(shape = CircleShape)
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .size(30.dp)
+                                .align(Alignment.Center),
+                            imageVector = Icons.Outlined.KeyboardDoubleArrowRight,
+                            contentDescription = "Icon",
+                            tint = AppYellow
+                        )
+                    }
                 }
             }
-
-        }
         }
     }
 }
