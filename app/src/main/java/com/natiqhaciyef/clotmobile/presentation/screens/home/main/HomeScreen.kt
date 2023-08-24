@@ -1,11 +1,9 @@
-package com.natiqhaciyef.clotmobile.presentation.screens.home
+package com.natiqhaciyef.clotmobile.presentation.screens.home.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,14 +23,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextFieldColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material.Icon
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -42,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -58,7 +51,6 @@ import androidx.navigation.NavController
 import com.natiqhaciyef.clotmobile.data.models.UserModel
 import com.natiqhaciyef.clotmobile.presentation.components.CategoryCard
 import com.natiqhaciyef.clotmobile.presentation.components.ClothesCard
-import com.natiqhaciyef.clotmobile.presentation.components.OutlinedInputBox
 import com.natiqhaciyef.clotmobile.presentation.components.categories.Category
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Opensans
 import com.natiqhaciyef.clotmobile.presentation.navigation.ScreenId
@@ -66,14 +58,10 @@ import com.natiqhaciyef.clotmobile.presentation.states.ClothesUIState
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.ClothesViewModel
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppDarkPurple
-import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppGray
 import com.natiqhaciyef.clotmobile.ui.theme.AppLightOrange
-import com.natiqhaciyef.clotmobile.ui.theme.AppOrange
 import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppYellow
-import com.natiqhaciyef.clotmobile.ui.theme.LightYellow
-import com.natiqhaciyef.clotmobile.ui.theme.Yellow
 
 @Composable
 fun HomeScreen(

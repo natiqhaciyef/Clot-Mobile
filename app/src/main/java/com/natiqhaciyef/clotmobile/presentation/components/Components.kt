@@ -43,6 +43,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Star
@@ -88,6 +90,9 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.media3.ui.PlayerView
 import coil.compose.rememberImagePainter
 import com.natiqhaciyef.clotmobile.R
+import com.natiqhaciyef.clotmobile.common.helpers.cardTypeToImageFinder
+import com.natiqhaciyef.clotmobile.common.helpers.formatExpirationDate
+import com.natiqhaciyef.clotmobile.common.helpers.formatOtherCardNumbers
 import com.natiqhaciyef.clotmobile.common.util.classes.NavItemModel
 import com.natiqhaciyef.clotmobile.presentation.components.fonts.Lobster
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.VideoPlayerViewModel
@@ -180,7 +185,7 @@ fun InputBoxTitle(
 ) {
     val focusManager = LocalFocusManager.current
 
-   Text(
+    Text(
         modifier = modifier
             .padding(start = 20.dp)
             .fillMaxWidth(),
@@ -265,6 +270,201 @@ fun InputBoxTitle(
 
 
 @Composable
+fun InputBoxTitleForCardNumber(
+    modifier: Modifier = Modifier,
+    modifierInput: Modifier = Modifier,
+    concept: String,
+    input: MutableState<String>,
+    paymentMethod: MutableState<String>,
+    onClick: (String) -> Unit = { }
+) {
+    val focusManager = LocalFocusManager.current
+
+    Text(
+        modifier = modifier
+            .padding(start = 20.dp)
+            .fillMaxWidth(),
+        text = concept,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black,
+    )
+    Spacer(modifier = Modifier.height(10.dp))
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
+        value = input.value,
+        onValueChange = {
+            if (input.value.length <= 16)
+                input.value = it
+        },
+        enabled = true,
+        singleLine = true,
+        readOnly = false,
+        shape = RoundedCornerShape(8.dp),
+        keyboardActions = KeyboardActions(onNext = {
+            focusManager.moveFocus(FocusDirection.Down)
+        }),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Number
+        ),
+        textStyle = TextStyle.Default.copy(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = AppDarkBrown,
+            focusedBorderColor = AppExtraLightPurple,
+            cursorColor = AppDarkBrown,
+            focusedTextColor = AppDarkBrown,
+            unfocusedTextColor = AppDarkBrown,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            focusedLabelColor = AppGray,
+            unfocusedLabelColor = AppGray,
+        ),
+        label = {
+            Text(
+                text = "Enter ${concept.lowercase()}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+            )
+        },
+        trailingIcon = {
+            Image(
+                modifier = Modifier
+                    .padding(end = 15.dp)
+                    .size(35.dp),
+                painter = painterResource(id = cardTypeToImageFinder(paymentMethod.value)),
+                contentDescription = "Card type"
+            )
+        },
+        visualTransformation = { number ->
+            formatOtherCardNumbers(input.value)
+        }
+    )
+}
+
+
+@Composable
+fun InputBoxForCardDateAndCVV(
+    modifier: Modifier = Modifier,
+    modifierInput: Modifier = Modifier,
+    expireDate: MutableState<String>,
+    cvvCode: MutableState<String>,
+    onClick: (String) -> Unit = { }
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
+    ) {
+        OutlinedTextField(
+            modifier = Modifier
+                .width(200.dp)
+                .padding(end = 20.dp),
+            value = expireDate.value,
+            onValueChange = {
+                if (expireDate.value.length <= 4)
+                    expireDate.value = it
+            },
+            enabled = true,
+            singleLine = true,
+            readOnly = false,
+            shape = RoundedCornerShape(8.dp),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Number
+            ),
+            textStyle = TextStyle.Default.copy(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = AppDarkBrown,
+                focusedBorderColor = AppExtraLightPurple,
+                cursorColor = AppDarkBrown,
+                focusedTextColor = AppDarkBrown,
+                unfocusedTextColor = AppDarkBrown,
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                focusedPlaceholderColor = AppGray,
+                unfocusedPlaceholderColor = AppGray
+            ),
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.CalendarMonth,
+                    contentDescription = "Date"
+                )
+            },
+            label = {
+                Text(
+                    modifier = Modifier,
+                    text = "xx/xx",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp
+                )
+            },
+            visualTransformation = { number ->
+                formatExpirationDate(expireDate.value)
+            }
+        )
+
+        OutlinedTextField(
+            modifier = Modifier
+                .width(200.dp)
+                .padding(start = 20.dp),
+            value = cvvCode.value,
+            onValueChange = {
+                if (cvvCode.value.length < 3)
+                    cvvCode.value = it
+            },
+            enabled = true,
+            singleLine = true,
+            readOnly = false,
+            shape = RoundedCornerShape(8.dp),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Number
+            ),
+            textStyle = TextStyle.Default.copy(
+                fontSize = 15.sp,
+                fontWeight = FontWeight.SemiBold,
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = AppDarkBrown,
+                focusedBorderColor = AppExtraLightPurple,
+                cursorColor = AppDarkBrown,
+                focusedTextColor = AppDarkBrown,
+                unfocusedTextColor = AppDarkBrown,
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                focusedPlaceholderColor = AppGray,
+                unfocusedPlaceholderColor = AppGray
+            ),
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Help,
+                    contentDescription = "Question"
+                )
+            },
+            label = {
+                Text(
+                    modifier = Modifier,
+                    text = "CVV",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp
+                )
+            }
+        )
+    }
+}
+
+
+
+@Composable
 fun OutlinedInputBox(
     modifier: Modifier = Modifier,
     concept: String,
@@ -342,7 +542,7 @@ fun OutlinedInputBox(
             fontWeight = FontWeight.Bold,
         ),
         placeholder = {
-            androidx.compose.material3.Text(
+            Text(
                 text = "Enter ${concept.lowercase()}",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -671,7 +871,7 @@ fun CustomDropDownMenu(
     list: List<String>,
     selectedOption: MutableState<String>,
     isEnabled: Boolean = true,
-    extraAction: () -> Unit  = { }
+    extraAction: () -> Unit = { }
 ) {
     var expanded by remember { mutableStateOf(false) }
 

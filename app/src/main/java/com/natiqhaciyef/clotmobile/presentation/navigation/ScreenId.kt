@@ -8,4 +8,5 @@ enum class ScreenId {
 
     MainScreenLine,
     ClothesDetailsScreen,
+    PaymentScreen
 }

@@ -3,7 +3,6 @@ package com.natiqhaciyef.clotmobile.presentation.screens.home
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
@@ -16,11 +15,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.natiqhaciyef.clotmobile.R
 import com.natiqhaciyef.clotmobile.common.util.classes.NavItemModel
 import com.natiqhaciyef.clotmobile.presentation.components.NavBar
 import com.natiqhaciyef.clotmobile.presentation.navigation.BottomNavigationIndex
-import com.natiqhaciyef.clotmobile.presentation.viewmodels.ClothesViewModel
+import com.natiqhaciyef.clotmobile.presentation.screens.home.cart.CartScreen
+import com.natiqhaciyef.clotmobile.presentation.screens.home.main.HomeScreen
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.RegistrationViewModel
 
 @Composable

@@ -1,4 +1,4 @@
-package com.natiqhaciyef.clotmobile.presentation.screens.home
+package com.natiqhaciyef.clotmobile.presentation.screens.home.main
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

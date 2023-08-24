@@ -1,8 +1,5 @@
-package com.natiqhaciyef.clotmobile.presentation.screens.home
+package com.natiqhaciyef.clotmobile.presentation.screens.home.cart
 
-import androidx.compose.animation.Animatable
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
@@ -22,7 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -30,23 +26,19 @@ import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.Icon
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingBasket
 import androidx.compose.material.icons.outlined.KeyboardDoubleArrowRight
-import androidx.compose.material.icons.outlined.ShoppingBasket
 import androidx.compose.material.rememberDismissState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -68,7 +60,6 @@ import com.natiqhaciyef.clotmobile.domain.models.CartMappedModel
 import com.natiqhaciyef.clotmobile.presentation.navigation.ScreenId
 import com.natiqhaciyef.clotmobile.presentation.viewmodels.CartViewModel
 import com.natiqhaciyef.clotmobile.ui.theme.AppExtraLightPurple
-import com.natiqhaciyef.clotmobile.ui.theme.AppPurple
 import com.natiqhaciyef.clotmobile.ui.theme.AppYellow
 import kotlin.math.roundToInt
 
@@ -95,7 +86,7 @@ fun CartScreen(
         colorAlpha.value = (1 - swipeableState.offset.value.roundToInt() * 0.001).toFloat()
 
     if (swipeableState.offset.value.roundToInt() > 800 && currentState.value) {
-//        navController.navigate(ScreenId.ForgotPasswordScreen.name)
+        navController.navigate(ScreenId.PaymentScreen.name)
         currentState.value = false
     }
 

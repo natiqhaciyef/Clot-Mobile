@@ -7,8 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.natiqhaciyef.clotmobile.presentation.screens.home.ClothesDetailsScreen
+import com.natiqhaciyef.clotmobile.presentation.screens.home.main.ClothesDetailsScreen
 import com.natiqhaciyef.clotmobile.presentation.screens.home.MainScreenLine
+import com.natiqhaciyef.clotmobile.presentation.screens.home.cart.PaymentScreen
 import com.natiqhaciyef.clotmobile.presentation.screens.registration.ForgotPasswordScreen
 import com.natiqhaciyef.clotmobile.presentation.screens.registration.LoginScreen
 import com.natiqhaciyef.clotmobile.presentation.screens.registration.RegisterScreen
@@ -71,6 +72,10 @@ fun AppNavigation() {
             val id = it.arguments?.getInt("clothesId") ?: 0
             val userId = it.arguments?.getInt("userId") ?: 0
             ClothesDetailsScreen(navController = navController, id = id, userId = userId)
+        }
+
+        composable(route = ScreenId.PaymentScreen.name){
+            PaymentScreen(navController = navController)
         }
     }
 }
