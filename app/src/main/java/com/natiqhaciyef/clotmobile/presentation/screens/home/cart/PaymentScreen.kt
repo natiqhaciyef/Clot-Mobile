@@ -1,7 +1,12 @@
 package com.natiqhaciyef.clotmobile.presentation.screens.home.cart
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,85 +55,85 @@ fun PaymentScreen(
     val masterCardSelected = remember { mutableStateOf(false) }
     val paypalSelected = remember { mutableStateOf(false) }
 
-    Box(
+    Column(
         modifier = Modifier
+            .background(AppDarkPurple)
             .fillMaxSize()
-            .background(AppExtraLightPurple)
+            .padding(top = 45.dp)
+            .clickable {
+                selectedPayment.value = ""
+                visaSelected.value = false
+                masterCardSelected.value = false
+                paypalSelected.value = false
+            },
     ) {
-        Column(
+        Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-        ) {
+                .padding(horizontal = 25.dp),
+            text = "Select payment method",
+            fontWeight = FontWeight.Bold,
+            fontSize = 23.sp,
+            color = Color.White,
+            textAlign = TextAlign.Start
+        )
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 50.dp)
-                    .height(280.dp)
-                    .padding(horizontal = 20.dp),
-                shape = RoundedCornerShape(12.dp),
-                elevation = CardDefaults.elevatedCardElevation(5.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .background(AppDarkPurple)
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 25.dp),
-                        text = "Select payment method",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        color = Color.White,
-                        textAlign = TextAlign.Start
-                    )
+        Spacer(modifier = Modifier.height(15.dp))
 
+        PaymentCardItems(
+            paymentMethod = PaymentMethodList.list[0],
+            isSelected = visaSelected,
+            action = {
+                if (visaSelected.value) {
                     Spacer(modifier = Modifier.height(15.dp))
-
-                    PaymentCardItems(
-                        paymentMethod = PaymentMethodList.list[0],
-                        isSelected = visaSelected
-                    ) {
-                        selectedPayment.value = "Visa"
-                        visaSelected.value = true
-                        masterCardSelected.value = false
-                        paypalSelected.value = false
+                    AnimatedVisibility(visible = visaSelected.value) {
+                        PaymentDetails(paymentMethod = selectedPayment)
                     }
-                    Spacer(modifier = Modifier.height(15.dp))
-                    PaymentCardItems(
-                        paymentMethod = PaymentMethodList.list[1],
-                        isSelected = masterCardSelected
-                    ) {
-                        selectedPayment.value = "Master card"
-                        visaSelected.value = false
-                        masterCardSelected.value = true
-                        paypalSelected.value = false
-                    }
-                    Spacer(modifier = Modifier.height(15.dp))
-                    PaymentCardItems(
-                        paymentMethod = PaymentMethodList.list[2],
-                        isSelected = paypalSelected
-                    ) {
-                        selectedPayment.value = "PayPal"
-                        visaSelected.value = false
-                        masterCardSelected.value = false
-                        paypalSelected.value = true
-                    }
-                    Spacer(modifier = Modifier.height(15.dp))
                 }
             }
-
-            Spacer(modifier = Modifier.height(45.dp))
-
-            // Animate wit payment details
-            if (selectedPayment.value.isNotEmpty()) {
-                PaymentDetails(selectedPayment)
-            }
+        ) {
+            selectedPayment.value = "Visa"
+            visaSelected.value = true
+            masterCardSelected.value = false
+            paypalSelected.value = false
         }
+        Spacer(modifier = Modifier.height(15.dp))
+        PaymentCardItems(
+            paymentMethod = PaymentMethodList.list[1],
+            isSelected = masterCardSelected,
+            action = {
+                if (masterCardSelected.value) {
+                    Spacer(modifier = Modifier.height(15.dp))
+                    AnimatedVisibility(visible = masterCardSelected.value) {
+                        PaymentDetails(paymentMethod = selectedPayment)
+                    }
+                }
+            }
+        ) {
+            selectedPayment.value = "Master card"
+            visaSelected.value = false
+            masterCardSelected.value = true
+            paypalSelected.value = false
+        }
+        Spacer(modifier = Modifier.height(15.dp))
+        PaymentCardItems(
+            paymentMethod = PaymentMethodList.list[2],
+            isSelected = paypalSelected,
+            action = {
+                if (paypalSelected.value) {
+                    Spacer(modifier = Modifier.height(15.dp))
+                    AnimatedVisibility(visible = paypalSelected.value) {
+                        PaymentDetails(paymentMethod = selectedPayment)
+                    }
+                }
+            }
+        ) {
+            selectedPayment.value = "PayPal"
+            visaSelected.value = false
+            masterCardSelected.value = false
+            paypalSelected.value = true
+        }
+        Spacer(modifier = Modifier.height(45.dp))
     }
 }
 
@@ -144,16 +149,15 @@ fun PaymentDetails(
     val cvvCode = remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
         Text(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
             text = "Personal information",
-            fontSize = 23.sp,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
         )
@@ -163,13 +167,15 @@ fun PaymentDetails(
             concept = "Name",
             input = name,
             isSingleLine = true,
-            modifier = Modifier
+            modifier = Modifier,
+            fontSize = 17
         )
         Spacer(modifier = Modifier.height(20.dp))
         InputBoxTitleForCardNumber(
             concept = "Card number",
             input = cardNumber,
-            paymentMethod = paymentMethod
+            paymentMethod = paymentMethod,
+            fontSize = 20
         )
         Spacer(modifier = Modifier.height(20.dp))
         InputBoxForCardDateAndCVV(expireDate = dateOfCard, cvvCode = cvvCode)
@@ -182,18 +188,25 @@ fun PaymentDetails(
 private fun PaymentCardItems(
     paymentMethod: PaymentChoiceModel,
     isSelected: MutableState<Boolean>,
+    action: @Composable () -> Unit = { },
     content: () -> Unit,
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(if (isSelected.value) 370.dp else 50.dp)
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            )
             .padding(horizontal = 20.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .background(AppExtraLightPurple)
                 .padding(horizontal = 10.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -223,5 +236,7 @@ private fun PaymentCardItems(
                 onClick = { content() },
             )
         }
+
+        action()
     }
 }

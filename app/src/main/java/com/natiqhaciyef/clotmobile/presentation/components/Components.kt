@@ -275,21 +275,12 @@ fun InputBoxTitleForCardNumber(
     modifierInput: Modifier = Modifier,
     concept: String,
     input: MutableState<String>,
+    fontSize: Int = 20,
     paymentMethod: MutableState<String>,
     onClick: (String) -> Unit = { }
 ) {
     val focusManager = LocalFocusManager.current
 
-    Text(
-        modifier = modifier
-            .padding(start = 20.dp)
-            .fillMaxWidth(),
-        text = concept,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Bold,
-        color = Color.Black,
-    )
-    Spacer(modifier = Modifier.height(10.dp))
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -363,8 +354,8 @@ fun InputBoxForCardDateAndCVV(
     ) {
         OutlinedTextField(
             modifier = Modifier
-                .width(200.dp)
-                .padding(end = 20.dp),
+                .width(160.dp)
+                .padding(end = 15.dp),
             value = expireDate.value,
             onValueChange = {
                 if (expireDate.value.length <= 4)
@@ -414,8 +405,8 @@ fun InputBoxForCardDateAndCVV(
 
         OutlinedTextField(
             modifier = Modifier
-                .width(200.dp)
-                .padding(start = 20.dp),
+                .width(160.dp)
+                .padding(start = 15.dp),
             value = cvvCode.value,
             onValueChange = {
                 if (cvvCode.value.length < 3)
@@ -651,6 +642,7 @@ fun InputBox(
     isSingleLine: Boolean,
     type: KeyboardType = KeyboardType.Text,
     prefix: String = "",
+    fontSize: Int = 17,
     trailingIcon: MutableState<ImageVector?> = mutableStateOf(null),
     leadingIcon: MutableState<ImageVector?> = mutableStateOf(null),
     onClick: (String) -> Unit = { }
@@ -695,13 +687,13 @@ fun InputBox(
                 Text(
                     text = prefix,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 17.sp
+                    fontSize = fontSize.sp
                 )
             } else {
                 Text(
                     text = "",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 17.sp
+                    fontSize = fontSize.sp
                 )
             }
         },
@@ -718,7 +710,7 @@ fun InputBox(
             unfocusedIndicatorColor = Color.Transparent
         ),
         textStyle = TextStyle.Default.copy(
-            fontSize = 17.sp,
+            fontSize = fontSize.sp,
             fontWeight = FontWeight.Bold,
         ),
         placeholder = {
