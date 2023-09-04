@@ -34,15 +34,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RemoteModule {
-    private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    private val okhttp = OkHttpClient.Builder().addInterceptor(logger)
-
     @Provides
     @Singleton
     fun provideNetworkConfiguration(): Retrofit = Retrofit.Builder()
         .baseUrl(NetworkURL.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(okhttp.build())
+        .client(NetworkURL.okhttp.build())
         .build()
 
     @Provides
